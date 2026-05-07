@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Medical Portal
 
-## Getting Started
+Portal médico desarrollado con Next.js, React, TypeScript y Tailwind CSS.
 
-First, run the development server:
+---
+
+## Stack
+
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- ESLint
+
+---
+
+## Requirements
+
+- Node.js 24
+- NVM recomendado
+
+---
+
+## Installation
+
+Clone repository:
+
+```bash
+git clone https://github.com/Bryan-Zavala/medical-portal.git
+```
+
+Enter project folder:
+
+```bash
+cd medical-portal
+```
+
+Use correct Node version:
+
+```bash
+nvm use
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```txt
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Git Workflow
 
-To learn more about Next.js, take a look at the following resources:
+Do NOT work directly on `main`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Before starting a task:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+git checkout main
+git pull origin main
+git checkout -b feature/task-name
+```
 
-## Deploy on Vercel
+After finishing:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- push branch
+- open Pull Request to `main`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Sync dependencies
+
+After pulling new changes:
+
+```bash
+git pull origin main
+npm install
+```
+
+If you open a new terminal session:
+
+```bash
+nvm use
+```
+
+---
+
+## Available Scripts
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
