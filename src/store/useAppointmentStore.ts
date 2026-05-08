@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import type { Appointment, AppointmentStatus } from "../types/appointment.types";
 import { mockAppointments } from "../data/mockAppointments";
-
+// se definen las funciones de las citas
 interface AppointmentState {
   appointments: Appointment[];
 
