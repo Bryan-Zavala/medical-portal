@@ -1,3 +1,5 @@
+// src/components/auth/LoginForm.tsx
+
 "use client";
 
 import { useState } from "react";
@@ -118,11 +120,6 @@ export function LoginForm() {
             Acceder
           </button>
         </div>
-
-        {/* <div className="mt-6 rounded-xl bg-slate-100 p-4 text-sm text-slate-600">
-          <p>Doctor: doctor@clinic.com / Doctor123!</p>
-          <p>Paciente: paciente@mail.com / Paciente123!</p>
-        </div> */}
       </form>
     </section>
   );
