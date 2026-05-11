@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-// COMPLEJIDAD PREVENTIVA: Esquema blindado contra datos "raros" o sucios
+// Esquema blindado contra datos "raros" o sucios
 export const patientSchema = z.object({
   // 1. Validamos que el ID tenga un formato razonable y no esté vacío
   id: z.string().min(1, "ID inválido"),
 
   userId: z.string(),
 
-  // 2. SANEAMIENTO: trim() quita espacios invisibles al inicio y final.
+  // 2. SANEAMIENTO:
   // transform() estandariza la capitalización por si la API envía "cArLos"
   name: z
     .string()
@@ -19,14 +19,14 @@ export const patientSchema = z.object({
     }),
 
   // 3. COERCIÓN: Si la API manda {"age": "34"}, Zod lo convierte al número 34.
-  // Añadimos límites lógicos médicos para detectar basura en la DB.
+  // límites lógicos médicos para detectar basura en la DB.
   age: z.coerce
     .number()
     .int("La edad debe ser un número entero")
     .nonnegative("La edad no puede ser negativa")
     .max(130, "Edad fuera del límite biológico"),
 
-  // 4. REGEX: Evita que el teléfono sea texto basura como "no tiene" o "123".
+  // 4. REGEX:
   // Acepta formato internacional o nacional con espacios/guiones.
   phone: z
     .string()
@@ -61,7 +61,7 @@ export const paginatedPatientsSchema = z.object({
 export type PatientResponse = z.infer<typeof patientSchema>;
 export type PaginatedPatients = z.infer<typeof paginatedPatientsSchema>;
 
-// Esquema para los filtros de búsqueda (valida lo que envía la UI hacia el servicio)
+// Esquema para los filtros de búsqueda
 export const patientFiltersSchema = z.object({
   search: z.string().optional(),
   minAge: z.coerce.number().nonnegative().optional(),

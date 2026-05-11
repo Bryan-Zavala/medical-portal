@@ -36,6 +36,7 @@ function makeQueryClient() {
         refetchOnWindowFocus: false, // Evita peticiones al cambiar de pestaña
         retry: 2,
         // Resiliencia: Exponential Backoff
+        //proteccion hacia el servidor
         retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       },
       mutations: {
@@ -47,7 +48,8 @@ function makeQueryClient() {
 }
 
 // 2. Singleton para el navegador
-//hace que el cliente se comparta en toda la app cuando se ejecuta en el navegador, pero cada petición al servidor obtiene uno nuevo (evitando fugas de datos entre usuarios)
+//hace que el cliente se comparta en toda la app cuando se ejecuta en el navegador,
+//  pero cada petición al servidor obtiene uno nuevo (evitando fugas de datos entre usuarios)
 let browserQueryClient: QueryClient | undefined = undefined;
 
 // 3. Patrón de inicialización segura para SSR + Cliente
