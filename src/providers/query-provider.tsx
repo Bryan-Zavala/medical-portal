@@ -1,24 +1,77 @@
 "use client";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryCache,
+  MutationCache,
+} from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import * as React from "react";
+
+// 1. Fábrica de clientes: Crea una instancia limpia y configurada
+function makeQueryClient() {
+  return new QueryClient({
+    queryCache: new QueryCache({
+      onError: (error, query) => {
+        if (error.name !== "AbortError") {
+          console.error(`[Query Error] Clave: ${query.queryKey}`);
+          console.error(`Detalle: ${error.message}`);
+          // TODO: Enviar a DataDog / Sentry
+        }
+      },
+    }),
+    mutationCache: new MutationCache({
+      // Intercepta errores en mutaciones (escrituras)
+      //mutaciones quiere decir cualquier acción que modifique datos, como crear, actualizar o eliminar registros en la base de datos
+      onError: (error) => {
+        // Intercepta fallos al intentar guardar/modificar datos
+        console.error(`[Mutation Error] Crítico: Fallo al escribir en la BD.`);
+        console.error(`Detalle: ${error.message}`);
+      },
+    }),
+    defaultOptions: {
+      queries: {
+        staleTime: 1000 * 60 * 5, // 5 minutos de frescura
+        refetchOnWindowFocus: false, // Evita peticiones al cambiar de pestaña
+        retry: 2,
+        // Resiliencia: Exponential Backoff
+        retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+      },
+      mutations: {
+        // Prevención: No reintentar escrituras para evitar duplicidad de transacciones
+        retry: 0,
+      },
+    },
+  });
+}
+
+// 2. Singleton para el navegador
+//hace que el cliente se comparta en toda la app cuando se ejecuta en el navegador, pero cada petición al servidor obtiene uno nuevo (evitando fugas de datos entre usuarios)
+let browserQueryClient: QueryClient | undefined = undefined;
+
+// 3. Patrón de inicialización segura para SSR + Cliente
+function getQueryClient() {
+  if (typeof window === "undefined") {
+    // Si estamos en el servidor (Node.js), SIEMPRE creamos uno nuevo.
+    // Esto previene que los datos de un paciente se filtren a otro.
+    return makeQueryClient();
+  } else {
+    // Si estamos en el navegador, reutilizamos el mismo cliente siempre.
+    if (!browserQueryClient) browserQueryClient = makeQueryClient();
+    return browserQueryClient;
+  }
+}
 
 export function QueryProvider({ children }: { children: React.ReactNode }) {
-  // Inicializamos el cliente una sola vez por sesión de usuario
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 1000 * 60 * 5, // 5 minutos antes de volver a pedir datos
-            refetchOnWindowFocus: false, // Evita peticiones innecesarias al cambiar de pestaña
-            retry: 2, // Reintenta 2 veces si la API falla
-          },
-        },
-      }),
-  );
+  // Obtenemos el cliente de forma segura dependiendo del entorno
+  const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {children}
+      {/* Herramienta visual inyectada solo en desarrollo. En producción se auto-elimina */}
+      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+    </QueryClientProvider>
   );
 }
