@@ -8,7 +8,10 @@ import { StatCard } from "@/components/molecules/StatCard";
 import { PatientCard } from "@/components/molecules/PatientCard";
 import { AppointmentCard } from "@/components/molecules/AppointmentCard";
 
-export default function Home() {
+export default async function Home() {
+  await new Promise((resolve) =>
+    setTimeout(resolve, 3000)
+  );
   return (
     <main className="min-h-screen py-10">
       <Container className="space-y-8">
