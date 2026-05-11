@@ -16,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portal Médico", // Actualizado para tu proyecto
-  description: "Portal de gestión médica y pacientes",
+  title: "MedSync Pro",
+  description:
+    "Portal médico para gestión de pacientes, citas y expedientes clínicos.",
 };
 
 export default function RootLayout({
