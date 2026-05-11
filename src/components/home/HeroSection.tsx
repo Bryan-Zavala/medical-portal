@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
+import { Header } from "../layout/Header";
 
 export function HeroSection() {
   return (
     <section className="relative min-h-screen bg-[url('/Header-image.jpg')] bg-cover bg-center bg-no-repeat">
+      <Header></Header>
       <div className="absolute inset-0 bg-white/65" />
 
       <Container className="relative z-10 flex min-h-screen items-center pt-16">

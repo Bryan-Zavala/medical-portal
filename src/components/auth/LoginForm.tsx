@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { validateLoginForm, type LoginErrors } from "@/lib/auth-validation";
-
+import { Header } from "../layout/Header";
 export function LoginForm() {
   const router = useRouter();
 
@@ -51,6 +51,7 @@ export function LoginForm() {
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+      <Header></Header>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg"

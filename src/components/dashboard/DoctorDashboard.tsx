@@ -1,7 +1,7 @@
 // src/components/dashboard/DoctorDashboard.tsx
 
 import type { User } from "../../types/user.types";
-
+import { DoctorMetricsGrid } from "./DoctorMetricsGrid";
 interface DoctorDashboardProps {
   user: User;
 }
