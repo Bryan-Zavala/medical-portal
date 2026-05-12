@@ -1,23 +1,25 @@
 // COMPLEJIDAD PREVENTIVA: Usamos 'unknown' para obligarnos a verificar el tipo en tiempo de ejecución
+import DOMPurify from "isomorphic-dompurify";
+
 export function sanitizeText(value: unknown): string {
   // 1. Defensa contra null, undefined, números u objetos
   if (typeof value !== "string") return "";
+  // 2. Primero delegamos en DOMPurify para eliminar cualquier tag/HTML.
+  // Usamos una lista blanca vacía para asegurarnos de que no queden tags.
+  let cleaned: string;
+  if (value.includes("<")) {
+    cleaned = DOMPurify.sanitize(value, { ALLOWED_TAGS: [] });
+  } else {
+    cleaned = value;
+  }
 
-  return (
-    value
-      .trim()
-      // 2. Limpieza de caracteres de control invisibles (ASCII 0-31) que corrompen JSON
-      // Muy común al copiar y pegar desde historiales médicos antiguos (ej. Word o PDFs)
-      .replace(/[\x00-\x1F\x7F]/g, "")
-      // 3. Reducir múltiples espacios, tabulaciones o saltos de línea a uno solo
-      .replace(/\s+/g, " ")
-  );
+  // 3. Normalizamos el texto: trim, remover caracteres de control y colapsar espacios.
+  cleaned = cleaned
+    .trim()
+    .replace(/[\x00-\x1F\x7F]/g, "")
+    .replace(/\s+/g, " ");
 
-  /* NOTA SENIOR: Hemos eliminado el replace(/<[^>]*>?/gm, ""). 
-    React escapa el HTML automáticamente, previniendo XSS por defecto.
-    Si alguna vez necesitas guardar HTML rico y limpiarlo para la base de datos, 
-    NUNCA uses Regex. Usa una librería oficial como 'isomorphic-dompurify'.
-  */
+  return cleaned;
 }
 
 export function sanitizeSearchQuery(value: unknown): string {
