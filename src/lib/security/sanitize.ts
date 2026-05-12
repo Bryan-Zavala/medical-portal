@@ -36,7 +36,6 @@ export function sanitizePatientName(value: unknown): string {
 export function sanitizeMedicalNote(value: unknown): string {
   const sanitized = sanitizeText(value);
 
-  // COMPLEJIDAD PREVENTIVA (Riesgo Clínico):
   // Si cortamos una nota, debemos avisar visualmente que el texto continúa.
   if (sanitized.length > 1000) {
     // Cortamos en 997 y añadimos 3 puntos para mantener el límite exacto de 1000
