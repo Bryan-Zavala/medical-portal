@@ -29,10 +29,21 @@ export function CreateMedicalRecordForm({
       user={user}
       selectedPatientId={selectedPatientId}
     >
-      <div className="rounded-2xl border border-slate-200 bg-white p-6">
-        <h3 className="text-xl font-bold text-slate-900">
+      <section
+        className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+        aria-labelledby="medical-record-form-title"
+      >
+        <h3
+          id="medical-record-form-title"
+          className="text-xl font-bold text-slate-900"
+        >
           Crear expediente - Multi-paso
         </h3>
+
+        <p className="mt-2 max-w-2xl text-sm text-slate-600">
+          Completa cada paso con calma. El progreso se guarda automáticamente y
+          los campos se validan antes de avanzar.
+        </p>
 
         {/* Indicador de pasos */}
         <div className="mt-6">
@@ -40,7 +51,11 @@ export function CreateMedicalRecordForm({
         </div>
 
         {/* Contenido del paso actual */}
-        <div className="mt-6 rounded-xl bg-slate-50 p-5">
+        <div
+          className="mt-6 rounded-xl bg-slate-50 p-5"
+          role="tabpanel"
+          aria-live="polite"
+        >
           <DiagnosisStep />
           <NotesStep />
           <PrescriptionsStep />
@@ -55,7 +70,7 @@ export function CreateMedicalRecordForm({
         <div className="mt-6">
           <FormActions />
         </div>
-      </div>
+      </section>
     </MedicalRecordFormProvider>
   );
 }
