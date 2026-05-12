@@ -33,7 +33,8 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
   const updateAppointmentStatus = useAppointmentStore(
     (state) => state.updateAppointmentStatus,
   );
-  const [appointmentToCancel, setAppointmentToCancel] = useState<Appointment | null>(null);
+  const [appointmentToCancel, setAppointmentToCancel] =
+    useState<Appointment | null>(null);
 
   const patient = mockPatients.find((patient) => patient.userId === user.id);
 
@@ -74,7 +75,11 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
                     Doctor: {doctor?.name}
                   </p>
                   <p className="text-sm text-slate-600">
-                    Fecha: {new Date(appointment.date).toLocaleString()}
+                    Inicio: {new Date(appointment.startTime).toLocaleString()}
+                  </p>
+
+                  <p className="text-sm text-slate-600">
+                    Fin: {new Date(appointment.endTime).toLocaleString()}
                   </p>
                   <p className="text-sm text-slate-600">
                     Motivo: {appointment.reason}

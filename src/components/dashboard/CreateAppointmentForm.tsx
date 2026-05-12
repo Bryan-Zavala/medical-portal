@@ -29,19 +29,34 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
   const patient = mockPatients.find((patient) => patient.userId === user.id);
 
   const [doctorId, setDoctorId] = useState("");
-  const [date, setDate] = useState("");
+  const [startTime, setStartTime] = useState("");
   const [reason, setReason] = useState("");
   const [message, setMessage] = useState("");
   const [toast, setToast] = useState("");
 
   const minDateTime = useMemo(() => getCurrentDateTimeLocal(), []);
 
+  const getEndTime = (value: string) => {
+    const endDate = new Date(value);
+    endDate.setMinutes(endDate.getMinutes() + 30);
+    return endDate.toISOString();
+  };
+
   const bookedSlots = appointments.filter(
     (appointment) =>
       appointment.doctorId === doctorId && appointment.status !== "cancelled",
   );
 
-  const isBooked = bookedSlots.some((appointment) => appointment.date === date);
+  const isBooked = bookedSlots.some((appointment) => {
+    if (!startTime) return false;
+
+    const requestedStart = new Date(startTime).getTime();
+    const requestedEnd = new Date(getEndTime(startTime)).getTime();
+    const existingStart = new Date(appointment.startTime).getTime();
+    const existingEnd = new Date(appointment.endTime).getTime();
+
+    return requestedStart < existingEnd && requestedEnd > existingStart;
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,12 +66,12 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
       return;
     }
 
-    if (!doctorId || !date || !reason.trim()) {
+    if (!doctorId || !startTime || !reason.trim()) {
       setMessage("Todos los campos son obligatorios");
       return;
     }
 
-    if (new Date(date) < new Date(minDateTime)) {
+    if (new Date(startTime) < new Date(minDateTime)) {
       setMessage("No puedes pedir una cita anterior al día y hora actual");
       return;
     }
@@ -70,7 +85,8 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
       id: crypto.randomUUID(),
       patientId: patient.id,
       doctorId,
-      date,
+      startTime: new Date(startTime).toISOString(),
+      endTime: getEndTime(startTime),
       reason,
       status: "pending",
     };
@@ -78,7 +94,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
     createAppointment(newAppointment);
 
     setDoctorId("");
-    setDate("");
+    setStartTime("");
     setReason("");
     setMessage("");
     setToast("Cita concretada correctamente");
@@ -104,7 +120,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
             value={doctorId}
             onChange={(event) => {
               setDoctorId(event.target.value);
-              setDate("");
+              setStartTime("");
               setMessage("");
             }}
             className="rounded-xl border border-slate-300 px-4 py-3"
@@ -120,10 +136,10 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
 
           <input
             type="datetime-local"
-            value={date}
+            value={startTime}
             min={minDateTime}
             onChange={(event) => {
-              setDate(event.target.value);
+              setStartTime(event.target.value);
               setMessage("");
             }}
             className="rounded-xl border border-slate-300 px-4 py-3"
@@ -133,7 +149,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
             <p className="text-sm text-slate-600">
               Horarios ocupados:{" "}
               {bookedSlots
-                .map((slot) => new Date(slot.date).toLocaleString())
+                .map((slot) => new Date(slot.startTime).toLocaleString())
                 .join(" · ")}
             </p>
           )}
