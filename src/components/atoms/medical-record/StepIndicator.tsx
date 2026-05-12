@@ -12,14 +12,22 @@ export function StepIndicator() {
   const { currentStep, setCurrentStep, canProceed } = useMedicalRecordForm();
 
   return (
-    <div className="flex gap-3">
+    <div
+      className="flex flex-wrap gap-3"
+      role="tablist"
+      aria-label="Pasos del expediente médico"
+    >
       {STEPS.map((step) => (
         <button
           key={step.id}
           type="button"
           onClick={() => setCurrentStep(step.id)}
           disabled={step.id > currentStep && !canProceed()}
-          className={`flex flex-col items-center rounded-lg px-4 py-3 text-sm font-semibold transition ${
+          role="tab"
+          aria-selected={currentStep === step.id}
+          aria-controls={`medical-record-step-${step.id}`}
+          aria-label={`Paso ${step.id}: ${step.title}`}
+          className={`flex min-w-32 flex-col items-center rounded-lg px-4 py-3 text-sm font-semibold transition motion-safe:duration-200 motion-safe:hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 ${
             currentStep === step.id
               ? "bg-blue-600 text-white"
               : step.id <= currentStep
