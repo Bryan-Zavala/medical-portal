@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// Esquema blindado contra datos "raros" o sucios
+// Esquema  contra datos "raros" o sucios
 export const patientSchema = z.object({
   // 1. Validamos que el ID tenga un formato razonable y no esté vacío
   id: z.string().min(1, "ID inválido"),

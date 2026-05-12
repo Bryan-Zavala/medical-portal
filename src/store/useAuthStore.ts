@@ -3,7 +3,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { z } from "zod";
-import type { User } from "../types/user.types";
+import type { AuthState } from "../types/auth-store.types";
 import { mockUsers } from "../data/mockUsers";
 
 // 1. Zod Schema para auditar la integridad de la sesión en disco
@@ -11,30 +11,19 @@ const hydratedUserSchema = z.object({
   id: z.string(),
   name: z.string(),
   email: z.string().email(),
-  // Protegemos el RBAC: Solo aceptamos estos 3 roles exactos
+  //  Solo aceptamos estos 3 roles exactos
   role: z.enum(["admin", "doctor", "patient"]),
 });
-
-interface AuthState {
-  user: User | null;
-  users: User[];
-  _hasHydrated: boolean;
-
-  login: (email: string) => User | null;
-  logout: () => void;
-  setUser: (user: User | null) => void;
-  setHasHydrated: (state: boolean) => void;
-}
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       user: null,
       users: mockUsers,
-      _hasHydrated: false, // Inicialmente no está hidratado evitamos renderizar la UI con datos falsos
+      _hasHydrated: false,
 
       login: (email) => {
-        // COMPLEJIDAD PREVENTIVA: Validación del input
+        // Validación del input
         const emailValidation = z.string().email().safeParse(email);
 
         if (!emailValidation.success) {
@@ -69,7 +58,7 @@ export const useAuthStore = create<AuthState>()(
       // FILTRO DE SEGURIDAD: Nunca guardar la lista de usuarios ni estados temporales en disco
       partialize: (state) => ({ user: state.user }),
 
-      // COMPLEJIDAD PREVENTIVA: Interceptamos la hidratación
+      // Interceptamos la hidratación esto hace que la UI no intente renderizar nada hasta que sepamos que la sesión es segura y válida.
       onRehydrateStorage: () => (state, error) => {
         if (error) {
           console.error("Fallo crítico leyendo la sesión del navegador", error);

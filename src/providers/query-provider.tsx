@@ -47,12 +47,13 @@ function makeQueryClient() {
   });
 }
 
-// 2. Singleton para el navegador
+// 2. Singleton para el cliente en el navegador
 //hace que el cliente se comparta en toda la app cuando se ejecuta en el navegador,
 //  pero cada petición al servidor obtiene uno nuevo (evitando fugas de datos entre usuarios)
 let browserQueryClient: QueryClient | undefined = undefined;
 
 // 3. Patrón de inicialización segura para SSR + Cliente
+//en servidor nuevo cliente cada vez, en navegador reutiliza el mismo
 function getQueryClient() {
   if (typeof window === "undefined") {
     // Si estamos en el servidor (Node.js), SIEMPRE creamos uno nuevo.

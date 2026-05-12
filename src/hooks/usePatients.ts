@@ -3,33 +3,84 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { fetchPatients } from "@/services/patient.service";
+import { patientFiltersSchema } from "@/lib/validations/patient.schema";
 import type { PatientFilters } from "@/lib/validations/patient.schema";
 
 export function usePatients(filters: PatientFilters) {
   const queryClient = useQueryClient();
 
-  // 1. Query principal: Obtiene los datos de la página actual de forma estricta
+  // Normalizamos y coercemos los filtros con Zod para obtener valores
+  // predecibles y evitar que cambios de identidad de objeto provoquen
+  // refetchs innecesarios en React Query.
+  const normalized = patientFiltersSchema.parse(filters);
+  const { page, limit, search, minAge, maxAge } = normalized;
+
+  // 1. Evitamos que la queryKey cambie por culpa de objetos nuevos o valores 'undefined'.
+  const queryKey = [
+    "patients",
+    page,
+    limit,
+    search ?? "",
+    minAge ?? null,
+    maxAge ?? null,
+  ];
+
   const query = useQuery({
-    queryKey: ["patients", filters],
-    queryFn: () => fetchPatients(filters),
+    queryKey,
+    queryFn: ({ signal }) => fetchPatients(normalized, signal),
   });
 
-  // 2. Patrón Oficial de Prefetching: Anticiparse al usuario
+  // 2.  Prefetching Defensivo
   useEffect(() => {
-    // Solo precargamos si hay datos y si NO estamos en la última página
+    // Solo precargamos SI y SOLO SI la query actual fue exitosa.
+    // Evitamos bombardear al servidor si ya está devolviendo errores.
     if (
+      query.isSuccess &&
       query.data?.metadata.totalPages &&
-      filters.page < query.data.metadata.totalPages
+      page < query.data.metadata.totalPages
     ) {
-      const nextFilters = { ...filters, page: filters.page + 1 };
+      const next = { page: page + 1, limit, search, minAge, maxAge };
+      const nextKey = [
+        "patients",
+        next.page,
+        next.limit,
+        next.search ?? "",
+        next.minAge ?? null,
+        next.maxAge ?? null,
+      ];
 
-      // Descarga la siguiente página en segundo plano y la guarda en caché
       queryClient.prefetchQuery({
-        queryKey: ["patients", nextFilters],
-        queryFn: () => fetchPatients(nextFilters),
+        queryKey: nextKey,
+        queryFn: ({ signal }) => fetchPatients(next, signal),
+        // Le damos un staleTime explícito para asegurar que la precarga viva
+        staleTime: 1000 * 60,
       });
     }
-  }, [filters, query.data?.metadata.totalPages, queryClient]);
+  }, [
+    page,
+    limit,
+    search,
+    minAge,
+    maxAge,
+    query.isSuccess,
+    query.data?.metadata.totalPages,
+    queryClient,
+  ]);
 
-  return query;
+  // 3. (Accesibilidad y UX):
+  // Exponemos datos derivados pre-calculados para que la UI no tenga que pensar.
+  const a11yMessage = query.isLoading
+    ? "Buscando pacientes, por favor espere."
+    : query.isError
+      ? "Error al comunicar con el servidor. Intente de nuevo."
+      : query.data
+        ? `Lista actualizada. Mostrando página ${query.data.metadata.page} de ${query.data.metadata.totalPages}.`
+        : "";
+
+  return {
+    ...query,
+    // Helper booleano seguro para mostrar la UI de "No hay resultados"
+    isEmpty: query.isSuccess && query.data.data.length === 0,
+    a11yMessage,
+  };
 }
