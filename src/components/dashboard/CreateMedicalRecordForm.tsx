@@ -4,12 +4,12 @@
 
 import type { User } from "@/types/user.types";
 import { MedicalRecordFormProvider } from "@/providers/MedicalRecordFormProvider";
-import { StepIndicator } from "@/components/medical-record/StepIndicator";
-import { DiagnosisStep } from "@/components/medical-record/DiagnosisStep";
-import { NotesStep } from "@/components/medical-record/NotesStep";
-import { PrescriptionsStep } from "@/components/medical-record/PrescriptionsStep";
-import { AutoSaveIndicator } from "@/components/medical-record/AutoSaveIndicator";
-import { FormActions } from "@/components/medical-record/FormActions";
+import { StepIndicator } from "@/components/atoms/medical-record/StepIndicator";
+import { DiagnosisStep } from "@/components/atoms/medical-record/DiagnosisStep";
+import { NotesStep } from "@/components/atoms/medical-record/NotesStep";
+import { PrescriptionsStep } from "@/components/atoms/medical-record/PrescriptionsStep";
+import { AutoSaveIndicator } from "@/components/atoms/medical-record/AutoSaveIndicator";
+import { FormActions } from "@/components/atoms/medical-record/FormActions";
 
 interface CreateMedicalRecordFormProps {
   user: User;
@@ -18,8 +18,7 @@ interface CreateMedicalRecordFormProps {
 
 /**
  * Container component que proporciona Context para toda la lógica del formulario
- * Compone los componentes atómicos sin prop drilling
- * Cumple: Zero Prop Drilling + Atomic Design + Zod Everywhere
+ * Zero Prop Drilling + Atomic Design + Zod Everywhere
  */
 export function CreateMedicalRecordForm({
   user,

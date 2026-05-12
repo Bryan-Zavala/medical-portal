@@ -1,5 +1,3 @@
-// src/components/medical-record/AutoSaveIndicator.tsx
-
 "use client";
 
 import { useMedicalRecordForm } from "@/contexts/MedicalRecordFormContext";

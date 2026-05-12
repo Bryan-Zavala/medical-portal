@@ -1,5 +1,3 @@
-// src/components/medical-record/FormActions.tsx
-
 "use client";
 
 import { useMedicalRecordForm } from "@/contexts/MedicalRecordFormContext";

@@ -1,5 +1,3 @@
-// src/components/medical-record/StepIndicator.tsx
-
 "use client";
 
 import { useMedicalRecordForm } from "@/contexts/MedicalRecordFormContext";
