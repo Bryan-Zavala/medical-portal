@@ -4,6 +4,7 @@ import type { User } from "../../types/user.types";
 import { PatientMetricsGrid } from "./PatientMetricsGrid";
 import { CreateAppointmentForm } from "./CreateAppointmentForm";
 import { PatientAppointments } from "./PatientAppointments";
+import { PatientMedicalRecords } from "./PatientMedicalRecords";
 
 interface PatientDashboardProps {
   user: User;
@@ -20,6 +21,7 @@ export function PatientDashboard({ user }: PatientDashboardProps) {
         <PatientMetricsGrid user={user} />
         <CreateAppointmentForm user={user} />
         <PatientAppointments user={user} />
+        <PatientMedicalRecords user={user} />
       </section>
     </main>
   );

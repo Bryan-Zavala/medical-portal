@@ -19,4 +19,10 @@ export const mockDoctors: Doctor[] = [
     name: "Lucía Torres",
     specialty: "Pediatría",
   },
+  {
+    id: "doctor-4",
+    userId: "user-5",
+    name: "Jorge Muñoz",
+    specialty: "Neurología",
+  },
 ];
