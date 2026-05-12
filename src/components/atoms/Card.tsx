@@ -10,7 +10,7 @@ export function Card({ children, className = "" }: CardProps) {
     <div
       className={`
                 rounded-lg
-                border 
+               
                 bg-white
                 bg-surface
                 p-4

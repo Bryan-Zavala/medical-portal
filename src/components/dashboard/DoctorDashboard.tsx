@@ -3,6 +3,7 @@
 import type { User } from "../../types/user.types";
 import { DoctorMetricsGrid } from "./DoctorMetricsGrid";
 import { DoctorAppointments } from "./DoctorAppointments";
+import { DoctorPatientsRecords } from "./DoctorPatientsRecords";
 
 interface DoctorDashboardProps {
   user: User;
@@ -16,8 +17,9 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
           Bienvenido Dr. {user.name}
         </h1>
 
-        <DoctorMetricsGrid />
+        <DoctorMetricsGrid user={user} />
         <DoctorAppointments user={user} />
+        <DoctorPatientsRecords user={user} />
       </section>
     </main>
   );

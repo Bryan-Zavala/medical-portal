@@ -1,26 +1,25 @@
+"use client";
+
 import React from "react";
 import { Input } from "../atoms/Input";
-import { Button } from "../atoms/Button";
 
 type SearchBarProps = {
+    value?: string;
+    onChange?: (value: string) => void;
     placeholder?: string;
-    buttonText?: string;
 };
 
 export function SearchBar({
+    value,
+    onChange,
     placeholder = "Buscar...",
-    buttonText = "Buscar",
 }: SearchBarProps) {
     return (
-        <div className="flex gap-2">
-            <Input
-                type="search"
-                placeholder={placeholder}
-            />
-
-            <Button>
-                {buttonText}
-            </Button>
-        </div>
+        <Input
+            type="search"
+            value={value}
+            onChange={(event) => onChange?.(event.target.value)}
+            placeholder={placeholder}
+        />
     );
 }

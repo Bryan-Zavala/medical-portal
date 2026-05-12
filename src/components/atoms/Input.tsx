@@ -1,23 +1,13 @@
 import React from "react";
 
-type InputProps = {
-    id?: string;
-    type?: string;
-    placeholder?: string;
-    className?: string;
-};
+type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 export function Input({
-    id,
-    type = "text",
-    placeholder = "",
     className = "",
+    ...props
 }: InputProps) {
     return (
         <input
-            id={id}
-            type={type}
-            placeholder={placeholder}
             className={`
                 w-full
                 rounded-lg
@@ -34,6 +24,7 @@ export function Input({
                 focus:ring-primary
                 ${className}
         `}
+            {...props}
         />
     );
 }

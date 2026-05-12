@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
 import { validateLoginForm, type LoginErrors } from "@/lib/auth-validation";
@@ -10,6 +10,8 @@ import { validateLoginForm, type LoginErrors } from "@/lib/auth-validation";
 export function LoginForm() {
   const router = useRouter();
 
+  const user = useAuthStore((state) => state.user);
+  const hasHydrated = useAuthStore((state) => state.hasHydrated);
   const login = useAuthStore((state) => state.login);
   const failedAttempts = useAuthStore((state) => state.failedAttempts);
   const isBlocked = useAuthStore((state) => state.isBlocked);
@@ -18,6 +20,14 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState<LoginErrors>({});
+
+  useEffect(() => {
+    if (hasHydrated && user) {
+      router.push("/dashboard");
+    }
+  }, [hasHydrated, user, router]);
+
+  if (!hasHydrated) return null;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
