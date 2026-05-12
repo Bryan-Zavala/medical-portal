@@ -1,4 +1,4 @@
-import { CardSkeleton } from "./CardSkeleton";
+import { DashboardMetricsSkeleton } from "./DashboardMetricsSkeleton";
 
 export function DashboardSkeleton() {
     return (
@@ -8,12 +8,7 @@ export function DashboardSkeleton() {
                 <div className="h-4 w-96 rounded bg-secondary animate-pulse" />
             </section>
 
-            <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-            </section>
+            <DashboardMetricsSkeleton />
 
             <section className="mt-6 grid gap-4 lg:grid-cols-2">
                 <div className="h-72 rounded-lg border border-border bg-surface p-4 shadow-md animate-pulse" />

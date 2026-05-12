@@ -24,7 +24,7 @@ export function HeroSection() {
           </p>
 
           <div className="flex gap-4">
-            <Link href="/login">
+            <Link href="/login" prefetch={true}>
               <Button>Acceder al portal</Button>
             </Link>
 

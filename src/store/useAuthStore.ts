@@ -1,3 +1,5 @@
+// src/store/useAuthStore.ts
+
 "use client";
 
 import { create } from "zustand";
@@ -20,36 +22,61 @@ export const useAuthStore = create<AuthState>()(
     (set, get) => ({
       user: null,
       users: mockUsers,
-      _hasHydrated: false,
+      failedAttempts: 0,
+      isBlocked: false,
+      hasHydrated: false,
 
-      login: (email) => {
+      login: (email, password) => {
         // Validación del input
         const emailValidation = z.string().email().safeParse(email);
 
         if (!emailValidation.success) {
           console.warn("Intento de login con formato de email inválido");
-          return null;
+          return false;
         }
 
         const foundUser = get().users.find(
-          (user) => user.email === emailValidation.data,
+          (user) =>
+            user.email === emailValidation.data && user.password === password,
         );
-        if (!foundUser) return null;
 
-        set({ user: foundUser });
-        return foundUser;
+        if (!foundUser) {
+          const attempts = get().failedAttempts + 1;
+
+          set({
+            failedAttempts: attempts,
+            isBlocked: attempts >= 3,
+          });
+
+          return false;
+        }
+
+        set({
+          user: foundUser,
+          failedAttempts: 0,
+          isBlocked: false,
+        });
+
+        return true;
       },
 
       logout: () => {
-        set({ user: null });
+        set({ user: null, failedAttempts: 0, isBlocked: false });
       },
 
       setUser: (user) => {
         set({ user });
       },
 
+      resetBlock: () => {
+        set({
+          failedAttempts: 0,
+          isBlocked: false,
+        });
+      },
+
       setHasHydrated: (state) => {
-        set({ _hasHydrated: state });
+        set({ hasHydrated: state });
       },
     }),
     {

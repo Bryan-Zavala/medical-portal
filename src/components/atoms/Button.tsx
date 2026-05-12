@@ -1,8 +1,8 @@
 import React from "react";
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
-    variant?: "primary" | "secondary" | "danger";
+    variant?: "primary" | "secondary" | "danger" | "success";
     size?: "sm" | "md" | "lg";
 };
 
@@ -10,9 +10,12 @@ export function Button({
     children,
     variant = "primary",
     size = "md",
+    className = "",
+    type = "button",
+    ...props
 }: ButtonProps) {
     const baseStyles =
-        "rounded-lg font-medium transition-all duration-200";
+        "rounded-lg font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60";
 
     const variantStyles = {
         primary:
@@ -23,6 +26,9 @@ export function Button({
 
         danger:
             "bg-danger text-white hover:opacity-90",
+
+        success:
+            "bg-green-600 text-white hover:opacity-90",
     };
 
     const sizeStyles = {
@@ -33,11 +39,14 @@ export function Button({
 
     return (
         <button
+            type={type}
             className={`
                 ${baseStyles}
                 ${variantStyles[variant]}
                 ${sizeStyles[size]}
+                ${className}
             `}
+            {...props}
         >
             {children}
         </button>

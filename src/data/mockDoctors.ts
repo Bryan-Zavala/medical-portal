@@ -4,7 +4,25 @@ export const mockDoctors: Doctor[] = [
   {
     id: "doctor-1",
     userId: "user-1",
-    name: "Dra. Ana López",
+    name: "Ana López",
     specialty: "Cardiología",
+  },
+  {
+    id: "doctor-2",
+    userId: "user-3",
+    name: "Javier Martín",
+    specialty: "Dermatología",
+  },
+  {
+    id: "doctor-3",
+    userId: "user-4",
+    name: "Lucía Torres",
+    specialty: "Pediatría",
+  },
+  {
+    id: "doctor-4",
+    userId: "user-5",
+    name: "Jorge Muñoz",
+    specialty: "Neurología",
   },
 ];

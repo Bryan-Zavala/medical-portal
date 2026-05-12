@@ -1,6 +1,10 @@
 // src/components/dashboard/PatientDashboard.tsx
 
 import type { User } from "../../types/user.types";
+import { PatientMetricsGrid } from "./PatientMetricsGrid";
+import { CreateAppointmentForm } from "./CreateAppointmentForm";
+import { PatientAppointments } from "./PatientAppointments";
+import { PatientMedicalRecords } from "./PatientMedicalRecords";
 
 interface PatientDashboardProps {
   user: User;
@@ -14,23 +18,10 @@ export function PatientDashboard({ user }: PatientDashboardProps) {
           Bienvenido {user.name}
         </h1>
 
-        <p className="mt-2 text-slate-600">
-          Panel de paciente: consulta tus citas y datos personales.
-        </p>
-
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          <article className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-semibold">Mis citas</h2>
-            <p className="mt-2 text-slate-600">
-              Consulta tus próximas citas médicas.
-            </p>
-          </article>
-
-          <article className="rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="text-xl font-semibold">Mis datos</h2>
-            <p className="mt-2 text-slate-600">Revisa tu información básica.</p>
-          </article>
-        </div>
+        <PatientMetricsGrid user={user} />
+        <CreateAppointmentForm user={user} />
+        <PatientAppointments user={user} />
+        <PatientMedicalRecords user={user} />
       </section>
     </main>
   );
