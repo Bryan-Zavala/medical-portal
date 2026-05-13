@@ -11,7 +11,10 @@ interface MedicalRecordState {
   records: MedicalRecord[];
   hasHydrated: boolean;
   createRecord: (record: MedicalRecord) => void;
-  updateRecord: (recordId: string, data: Omit<MedicalRecord, "id" | "patientId" | "doctorId" | "createdAt">) => void;
+  updateRecord: (
+    recordId: string,
+    data: Omit<MedicalRecord, "id" | "patientId" | "doctorId" | "createdAt">,
+  ) => void;
   getRecordsByPatientId: (patientId: string) => MedicalRecord[];
   setHasHydrated: (value: boolean) => void;
 }
