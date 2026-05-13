@@ -7,17 +7,23 @@
 // import { StatCard } from "@/components/molecules/StatCard";
 // import { PatientCard } from "@/components/molecules/PatientCard";
 // import { AppointmentCard } from "@/components/molecules/AppointmentCard";
-import { HomeMetricsSection } from "@/components/home/HomeMetricsSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { ArticlesSection } from "@/components/home/ArticlesSection";
 import { Footer } from "@/components/layout/Footer";
+import { StreamingMetricsSection } from "@/components/home/StreamingMetricsSection";
+import { Suspense } from "react";
+import { StreamingMetricsSkeleton } from "@/components/home/StreamingMetricsSekeleton";
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <>
       <HeroSection />
-      <HomeMetricsSection></HomeMetricsSection>
+      <Suspense fallback={<StreamingMetricsSkeleton />}>
+        <StreamingMetricsSection />
+      </Suspense>
       <AboutSection />
       <ServicesSection />
       <ArticlesSection />
