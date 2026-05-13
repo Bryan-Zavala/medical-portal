@@ -46,7 +46,8 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
 
   const confirmCancel = () => {
     if (!appointmentToCancel) return;
-    updateAppointmentStatus(appointmentToCancel.id, "cancelled");
+    //La función es async, pero no necesitamos esperar el resultado porque el optimistic update ya actualiza la UI inmediatamente.
+    void updateAppointmentStatus(appointmentToCancel.id, "cancelled");
     setAppointmentToCancel(null);
   };
 

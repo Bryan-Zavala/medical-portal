@@ -11,7 +11,11 @@ interface MedicalRecordState {
   records: MedicalRecord[];
   hasHydrated: boolean;
   createRecord: (record: MedicalRecord) => void;
-  updateRecord: (recordId: string, data: Omit<MedicalRecord, "id" | "patientId" | "doctorId" | "createdAt">) => void;
+  updateRecord: (
+    recordId: string,
+    data: Omit<MedicalRecord, "id" | "patientId" | "doctorId" | "createdAt">,
+  ) => void;
+  deleteRecord: (recordId: string) => void;
   getRecordsByPatientId: (patientId: string) => MedicalRecord[];
   setHasHydrated: (value: boolean) => void;
 }
@@ -31,6 +35,12 @@ export const useMedicalRecordStore = create<MedicalRecordState>()(
           records: state.records.map((record) =>
             record.id === recordId ? { ...record, ...data } : record,
           ),
+        }));
+      },
+
+      deleteRecord: (recordId) => {
+        set((state) => ({
+          records: state.records.filter((record) => record.id !== recordId),
         }));
       },
 
