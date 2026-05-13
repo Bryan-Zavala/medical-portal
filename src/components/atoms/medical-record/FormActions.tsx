@@ -5,8 +5,14 @@ import { useMedicalRecordForm } from "@/contexts/MedicalRecordFormContext";
 const TOTAL_STEPS = 3;
 
 export function FormActions() {
-  const { currentStep, setCurrentStep, canProceed, submit } =
-    useMedicalRecordForm();
+  const {
+    currentStep,
+    setCurrentStep,
+    canProceed,
+    submit,
+    editingRecordId,
+    cancelEdit,
+  } = useMedicalRecordForm();
 
   const handleNext = () => {
     if (currentStep < TOTAL_STEPS) {
@@ -22,6 +28,16 @@ export function FormActions() {
 
   return (
     <div className="flex flex-wrap gap-3" aria-label="Controles del formulario">
+      {editingRecordId && (
+        <button
+          type="button"
+          onClick={cancelEdit}
+          className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition motion-safe:duration-200 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-600 focus-visible:ring-offset-2"
+        >
+          Cancelar edición
+        </button>
+      )}
+
       {currentStep > 1 && (
         <button
           type="button"
@@ -47,7 +63,7 @@ export function FormActions() {
           onClick={submit}
           className="ml-auto rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white transition motion-safe:duration-200 hover:bg-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
         >
-          Crear expediente
+          {editingRecordId ? "Guardar cambios" : "Crear expediente"}
         </button>
       )}
     </div>
