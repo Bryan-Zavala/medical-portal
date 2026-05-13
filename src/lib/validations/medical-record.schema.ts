@@ -1,5 +1,10 @@
 import { z } from "zod";
 import { sanitizeText } from "@/lib/security/sanitize";
+import type {
+  MedicalRecord,
+  CreateMedicalRecordPayload,
+  MedicalRecordDraft,
+} from "@/types/medical-record.types";
 
 /**
  * Schema para validar un registro médico COMPLETO
@@ -51,8 +56,4 @@ export const medicalRecordDraftSchema = z.object({
   prescriptions: z.array(z.string()).default([]),
 });
 
-export type MedicalRecord = z.infer<typeof medicalRecordSchema>;
-export type CreateMedicalRecordPayload = z.infer<
-  typeof createMedicalRecordSchema
->;
-export type MedicalRecordDraft = z.infer<typeof medicalRecordDraftSchema>;
+export type { MedicalRecord, CreateMedicalRecordPayload, MedicalRecordDraft };
