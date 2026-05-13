@@ -2,7 +2,7 @@
 
 "use client";
 
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, useContext } from "react";
 import type { User } from "@/types/user.types";
 import type { MedicalRecordDraft } from "@/lib/validations/medical-record.schema";
 
