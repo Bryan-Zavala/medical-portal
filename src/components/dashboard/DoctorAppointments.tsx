@@ -81,7 +81,8 @@ export function DoctorAppointments({ user }: DoctorAppointmentsProps) {
                   <div className="flex gap-3">
                     <button
                       onClick={() =>
-                        updateAppointmentStatus(appointment.id, "confirmed")
+                        //La función es async, pero no necesitamos esperar el resultado porque el optimistic update ya actualiza la UI inmediatamente.
+                        void updateAppointmentStatus(appointment.id, "confirmed")
                       }
                       className="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white"
                     >
@@ -90,7 +91,8 @@ export function DoctorAppointments({ user }: DoctorAppointmentsProps) {
 
                     <button
                       onClick={() =>
-                        updateAppointmentStatus(appointment.id, "cancelled")
+                        //La función es async, pero no necesitamos esperar el resultado porque el optimistic update ya actualiza la UI inmediatamente.
+                        void updateAppointmentStatus(appointment.id, "cancelled")
                       }
                       className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white"
                     >

@@ -11,6 +11,7 @@ import { DiagnosticsTable } from "@/components/dashboard/DiagnosticsTable";
 import { mockDoctors } from "@/data/mockDoctors";
 import { mockPatients } from "@/data/mockPatients";
 import { useMedicalRecordStore } from "@/store/useMedicalRecordStore";
+import { useDebounce } from "@/hooks/useDebounce";
 
 interface DoctorPatientsRecordsProps {
   user: User;
@@ -20,6 +21,8 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
   const records = useMedicalRecordStore((state) => state.records);
   const doctor = mockDoctors.find((doctor) => doctor.userId === user.id);
   const [query, setQuery] = useState("");
+  // Aplicamos debouncing para evitar filtrados en cada pulsación de teclado.
+  const debouncedQuery = useDebounce(query, 1000);
   const [selectedPatientId, setSelectedPatientId] = useState<string>("");
   const [showDiagnostics, setShowDiagnostics] = useState(false);
 
@@ -32,7 +35,11 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
 
   if (!doctor) return null;
   const visiblePatients = mockPatients.filter((patient) =>
-    patient.name.toLowerCase().includes(query.toLowerCase()),
+    // Filtramos pacientes utilizando el valor con debounce.
+    // Evita ejecutar búsquedas en cada pulsación de teclado y mejora el rendimiento en listas grandes.
+    patient.name
+      .toLowerCase()
+      .includes(debouncedQuery.toLowerCase())
   );
 
   const selectedPatient = mockPatients.find(
@@ -86,11 +93,10 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
                 setSelectedPatientId(patient.id);
                 setShowDiagnostics(false);
               }}
-              className={`w-full rounded-xl border p-4 text-left transition ${
-                selectedPatientId === patient.id
-                  ? "border-blue-500 bg-blue-50"
-                  : "border-slate-200 hover:bg-slate-50"
-              }`}
+              className={`w-full rounded-xl border p-4 text-left transition ${selectedPatientId === patient.id
+                ? "border-blue-500 bg-blue-50"
+                : "border-slate-200 hover:bg-slate-50"
+                }`}
             >
               <p className="font-semibold text-slate-900">{patient.name}</p>
               <p className="text-sm text-slate-600">

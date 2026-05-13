@@ -20,10 +20,12 @@ interface AppointmentState {
 
   setAppointments: (appointments: Appointment[]) => void;
   createAppointment: (payload: CreateAppointmentPayload) => Appointment;
+  // Actualiza el estado de una cita aplicando optimistic update.
+  // La UI cambia inmediatamente y puede revertirse si falla la operación.
   updateAppointmentStatus: (
     appointmentId: string,
     status: AppointmentStatus,
-  ) => void;
+  ) => Promise<void>;
   deleteAppointment: (appointmentId: string) => void;
   getAppointmentsByPatientId: (patientId: string) => Appointment[];
   getAppointmentsByDoctorId: (doctorId: string) => Appointment[];
@@ -77,7 +79,12 @@ export const useAppointmentStore = create<AppointmentState>()(
         return newAppointment;
       },
 
-      updateAppointmentStatus: (appointmentId, status) => {
+      updateAppointmentStatus: async (appointmentId, status) => {
+        // Guardamos una copia del estado actual antes de modificarlo.
+        // Esto nos permite volver atrás si la actualización falla.
+        const previousAppointments = get().appointments;
+
+        // Optimistic update: actualizamos la UI inmediatamente
         set((state) => ({
           appointments: state.appointments.map((appointment) =>
             appointment.id === appointmentId
@@ -85,6 +92,16 @@ export const useAppointmentStore = create<AppointmentState>()(
               : appointment,
           ),
         }));
+
+        try {
+          // Simulación de una operación asíncrona. (Aquí iría la llamada real al backend/API.)
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        } catch {
+          // Rollback:si la operación falla, restauramos el estado anterior.
+          set({ appointments: previousAppointments });
+
+          throw new Error("No se pudo actualizar el estado de la cita.");
+        }
       },
 
       deleteAppointment: (appointmentId) => {
