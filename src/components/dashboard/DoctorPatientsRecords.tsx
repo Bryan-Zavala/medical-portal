@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { MedicalRecord } from "@/types/medical-record.types";
 import type { User } from "@/types/user.types";
 import { SearchBar } from "@/components/molecules/SearchBar";
@@ -11,7 +11,7 @@ import { DiagnosticsTable } from "@/components/dashboard/DiagnosticsTable";
 import { mockDoctors } from "@/data/mockDoctors";
 import { mockPatients } from "@/data/mockPatients";
 import { useMedicalRecordStore } from "@/store/useMedicalRecordStore";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebouncedCachedSearch } from "@/hooks/useDebouncedCachedSearch";
 
 interface DoctorPatientsRecordsProps {
   user: User;
@@ -22,7 +22,7 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
   const doctor = mockDoctors.find((doctor) => doctor.userId === user.id);
   const [query, setQuery] = useState("");
   // Aplicamos debouncing para evitar filtrados en cada pulsación de teclado.
-  const debouncedQuery = useDebounce(query, 1000);
+
   const [selectedPatientId, setSelectedPatientId] = useState<string>("");
   const [showDiagnostics, setShowDiagnostics] = useState(false);
 
@@ -33,14 +33,22 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
       window.removeEventListener("medical-record:show-diagnostics", handler);
   }, []);
 
-  if (!doctor) return null;
-  const visiblePatients = mockPatients.filter((patient) =>
-    // Filtramos pacientes utilizando el valor con debounce.
-    // Evita ejecutar búsquedas en cada pulsación de teclado y mejora el rendimiento en listas grandes.
-    patient.name
-      .toLowerCase()
-      .includes(debouncedQuery.toLowerCase())
-  );
+ 
+const patientFilter = useCallback(
+  (patient: (typeof mockPatients)[number], normalizedQuery: string) =>
+    patient.name.toLocaleLowerCase("es-ES").includes(normalizedQuery),
+  [],
+);
+
+  const { results: visiblePatients } = useDebouncedCachedSearch({
+    query,
+    items: mockPatients,
+    filter: patientFilter,
+    delay: 350,
+    cacheNamespace: "doctor-patient-record-search",
+  });
+  
+   if (!doctor) return null;
 
   const selectedPatient = mockPatients.find(
     (patient) => patient.id === selectedPatientId,

@@ -59,6 +59,9 @@ export function DoctorAppointments({ user }: DoctorAppointmentsProps) {
                     Paciente: {patient?.name}
                   </p>
                   <p className="text-slate-900">Teléfono: {patient?.phone}</p>
+                  <p className="text-sm text-slate-600">
+                    Especialidad: {appointment.specialty ?? doctor.specialty}
+                  </p>
 
                   <p className="text-sm text-slate-600">
                     Inicio: {new Date(appointment.startTime).toLocaleString()}

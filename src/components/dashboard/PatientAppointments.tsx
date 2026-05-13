@@ -76,6 +76,9 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
                     Doctor: {doctor?.name}
                   </p>
                   <p className="text-sm text-slate-600">
+                    Especialidad: {appointment.specialty ?? doctor?.specialty ?? "No indicada"}
+                  </p>
+                  <p className="text-sm text-slate-600">
                     Inicio: {new Date(appointment.startTime).toLocaleString()}
                   </p>
 
