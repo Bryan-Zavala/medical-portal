@@ -15,6 +15,7 @@ interface MedicalRecordState {
     recordId: string,
     data: Omit<MedicalRecord, "id" | "patientId" | "doctorId" | "createdAt">,
   ) => void;
+  deleteRecord: (recordId: string) => void;
   getRecordsByPatientId: (patientId: string) => MedicalRecord[];
   setHasHydrated: (value: boolean) => void;
 }
@@ -34,6 +35,12 @@ export const useMedicalRecordStore = create<MedicalRecordState>()(
           records: state.records.map((record) =>
             record.id === recordId ? { ...record, ...data } : record,
           ),
+        }));
+      },
+
+      deleteRecord: (recordId) => {
+        set((state) => ({
+          records: state.records.filter((record) => record.id !== recordId),
         }));
       },
 
