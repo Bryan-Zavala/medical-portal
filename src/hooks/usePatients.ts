@@ -28,6 +28,8 @@ export function usePatients(filters: PatientFilters) {
   const query = useQuery({
     queryKey,
     queryFn: ({ signal }) => fetchPatients(normalized, signal),
+    // Delega el error al GranularErrorBoundary más cercano en el árbol de componentes
+    throwOnError: true,
   });
 
   // 2.  Prefetching Defensivo
