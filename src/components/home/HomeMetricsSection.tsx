@@ -6,17 +6,28 @@ import { useMedicalRecordStore } from "@/store/useMedicalRecordStore";
 
 const STATIC_FACILITIES = 20;
 
-export function HomeMetricsSection() {
+interface HomeMetricsSectionProps {
+  initialPatientsAttended?: number;
+  initialProfessionalSpecialties?: number;
+  initialFacilities?: number;
+}
+
+export function HomeMetricsSection({
+  initialPatientsAttended = 0,
+  initialProfessionalSpecialties,
+  initialFacilities = STATIC_FACILITIES,
+}: HomeMetricsSectionProps) {
   const records = useMedicalRecordStore((state) => state.records);
   const hasHydrated = useMedicalRecordStore((state) => state.hasHydrated);
 
   const attendedPatients = hasHydrated
     ? new Set(records.map((record) => record.patientId)).size
-    : 0;
+    : initialPatientsAttended;
 
-  const professionalSpecialties = new Set(
-    mockDoctors.map((doctor) => doctor.specialty.trim()).filter(Boolean),
-  ).size;
+  const professionalSpecialties =
+    initialProfessionalSpecialties ??
+    new Set(mockDoctors.map((doctor) => doctor.specialty.trim()).filter(Boolean))
+      .size;
 
   const metrics = [
     {
@@ -32,7 +43,7 @@ export function HomeMetricsSection() {
       description: "Especialidades únicas disponibles en el equipo médico.",
     },
     {
-      value: STATIC_FACILITIES,
+      value: initialFacilities,
       title: "instalaciones",
       prefix: "Disponemos de",
       description: "Instalaciones médicas a alcance del paciente.",
