@@ -2,13 +2,14 @@
 
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { MedicalRecord } from "@/types/medical-record.types";
 import type { User } from "@/types/user.types";
 import { SearchBar } from "@/components/molecules/SearchBar";
 import { mockDoctors } from "@/data/mockDoctors";
 import { mockPatients } from "@/data/mockPatients";
 import { useMedicalRecordStore } from "@/store/useMedicalRecordStore";
+import { useDebouncedCachedSearch } from "@/hooks/useDebouncedCachedSearch";
 
 interface DoctorPatientsRecordsProps {
   user: User;
@@ -39,9 +40,19 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   if (!doctor) return null;
 
-  const visiblePatients = mockPatients.filter((patient) =>
-    patient.name.toLowerCase().includes(query.toLowerCase()),
+  const patientFilter = useCallback(
+    (patient: (typeof mockPatients)[number], normalizedQuery: string) =>
+      patient.name.toLocaleLowerCase("es-ES").includes(normalizedQuery),
+    [],
   );
+
+  const { results: visiblePatients } = useDebouncedCachedSearch({
+    query,
+    items: mockPatients,
+    filter: patientFilter,
+    delay: 350,
+    cacheNamespace: "doctor-patient-record-search",
+  });
 
   const selectedPatient = mockPatients.find(
     (patient) => patient.id === selectedPatientId,

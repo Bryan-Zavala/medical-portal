@@ -17,6 +17,7 @@ export const appointmentSchema = z
     id: z.string().uuid("ID debe ser UUID válido"),
     patientId: z.string().min(1, "Paciente requerido"),
     doctorId: z.string().min(1, "Doctor requerido"),
+    specialty: z.string().min(1, "Especialidad requerida"),
     startTime: z.string().datetime("Formato de fecha inválido"),
     endTime: z.string().datetime("Formato de fecha inválido"),
     reason: z.string().min(5, "Motivo requerido"),
@@ -35,6 +36,7 @@ export const createAppointmentSchema = z
   .object({
     patientId: z.string().min(1, "Paciente requerido"),
     doctorId: z.string().min(1, "Doctor requerido"),
+    specialty: z.string().min(1, "Especialidad requerida"),
     startTime: z.iso
       .datetime("Formato de fecha inválido")
       .refine(
