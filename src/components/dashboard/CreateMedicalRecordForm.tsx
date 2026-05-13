@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useState, useEffect } from "react";
 import type { User } from "@/types/user.types";
 import { MedicalRecordFormProvider } from "@/providers/MedicalRecordFormProvider";
 import { StepIndicator } from "@/components/atoms/medical-record/StepIndicator";
@@ -24,6 +25,21 @@ export function CreateMedicalRecordForm({
   user,
   selectedPatientId,
 }: CreateMedicalRecordFormProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    const handler = () => setIsEditing(true);
+    const handlerReset = () => setIsEditing(false);
+
+    window.addEventListener("medical-record:load-for-edit", handler);
+    window.addEventListener("medical-record:reset", handlerReset);
+
+    return () => {
+      window.removeEventListener("medical-record:load-for-edit", handler);
+      window.removeEventListener("medical-record:reset", handlerReset);
+    };
+  }, []);
+
   return (
     <MedicalRecordFormProvider
       user={user}
@@ -37,7 +53,7 @@ export function CreateMedicalRecordForm({
           id="medical-record-form-title"
           className="text-xl font-bold text-slate-900"
         >
-          Crear expediente - Multi-paso
+          {isEditing ? "Editar expediente" : "Crear expediente"} - Multi-paso
         </h3>
 
         <p className="mt-2 max-w-2xl text-sm text-slate-600">
@@ -69,6 +85,24 @@ export function CreateMedicalRecordForm({
         {/* Botones de navegación */}
         <div className="mt-6">
           <FormActions />
+        </div>
+
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={() => {
+              window.dispatchEvent(
+                new CustomEvent("medical-record:show-diagnostics"),
+              );
+              const target = document.getElementById(
+                "diagnostics-visualization",
+              );
+              target?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            className="inline-flex rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition motion-safe:duration-200 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-600 focus-visible:ring-offset-2"
+          >
+            Ir a visualización de diagnósticos
+          </button>
         </div>
       </section>
     </MedicalRecordFormProvider>
