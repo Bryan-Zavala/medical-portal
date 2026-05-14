@@ -1,8 +1,5 @@
-"use client";
-
 import { Container } from "@/components/atoms/Container";
 import { mockDoctors } from "@/data/mockDoctors";
-import { useMedicalRecordStore } from "@/store/useMedicalRecordStore";
 
 const STATIC_FACILITIES = 20;
 
@@ -17,12 +14,7 @@ export function HomeMetricsSection({
   initialProfessionalSpecialties,
   initialFacilities = STATIC_FACILITIES,
 }: HomeMetricsSectionProps) {
-  const records = useMedicalRecordStore((state) => state.records);
-  const hasHydrated = useMedicalRecordStore((state) => state.hasHydrated);
-
-  const attendedPatients = hasHydrated
-    ? new Set(records.map((record) => record.patientId)).size
-    : initialPatientsAttended;
+  const attendedPatients = initialPatientsAttended;
 
   const professionalSpecialties =
     initialProfessionalSpecialties ??
