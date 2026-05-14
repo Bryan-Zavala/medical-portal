@@ -2,9 +2,20 @@ import Link from "next/link";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
 import { Header } from "../layout/Header";
+import Image from "next/image";
+
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-[url('/Header-image.jpg')] bg-cover bg-center bg-no-repeat">
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Se utiliza next/image con priority para precargar la imagen de fondo, optimizar su formato y reducir drásticamente el LCP */}
+      <Image
+        src="/Header-image.jpg"
+        alt="Fondo del portal médico"
+        fill
+        priority
+        className="object-cover object-center -z-10"
+        sizes="100vw"
+      />
       <Header></Header>
       <div className="absolute inset-0 bg-white/65" />
 
