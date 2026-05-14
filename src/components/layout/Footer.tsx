@@ -44,7 +44,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-8 max-w-6xl border-t border-slate-800 pt-6 text-center text-sm text-slate-500">
+      <div className="mx-auto mt-8 max-w-6xl border-t border-slate-800 pt-6 text-center text-sm text-slate-300">
         © 2026 MediPortal. Todos los derechos reservados.
       </div>
     </footer>
