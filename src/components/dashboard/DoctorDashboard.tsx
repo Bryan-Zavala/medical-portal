@@ -12,6 +12,7 @@ import { DoctorPatientsRecords } from "./DoctorPatientsRecords";
 import { ProfileEditModal } from "./ProfileEditModal";
 
 import { Button } from "@/components/atoms/Button";
+import { NavBarForUsers } from "../layout/NavBarForUsers";
 
 interface DoctorDashboardProps {
   user: User;
@@ -19,11 +20,10 @@ interface DoctorDashboardProps {
 
 export function DoctorDashboard({ user }: DoctorDashboardProps) {
   // Estado para controlar apertura/cierre del modal
-  const [isProfileModalOpen, setIsProfileModalOpen] =
-    useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-slate-100 px-6 py-10">
+    <main className="min-h-screen bg-slate-100 px-6 py-10 pt-25">
       <section className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-4xl font-bold text-slate-900">
@@ -35,7 +35,7 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
             Editar perfil
           </Button>
         </div>
-
+        <NavBarForUsers></NavBarForUsers>
         <DoctorMetricsGrid user={user} />
         <DoctorAppointments user={user} />
         <DoctorPatientsRecords user={user} />

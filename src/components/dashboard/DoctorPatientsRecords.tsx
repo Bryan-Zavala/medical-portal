@@ -33,22 +33,26 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
       window.removeEventListener("medical-record:show-diagnostics", handler);
   }, []);
 
- 
-const patientFilter = useCallback(
+
+  const patientFilter = useCallback(
   (patient: (typeof mockPatients)[number], normalizedQuery: string) =>
     patient.name.toLocaleLowerCase("es-ES").includes(normalizedQuery),
-  [],
-);
+    [],
+  );
 
-  const { results: visiblePatients } = useDebouncedCachedSearch({
+  const {
+    results: visiblePatients,
+    normalizedQuery,
+  } = useDebouncedCachedSearch({
     query,
     items: mockPatients,
     filter: patientFilter,
     delay: 350,
     cacheNamespace: "doctor-patient-record-search",
   });
-  
-   if (!doctor) return null;
+
+
+  if (!doctor) return null;
 
   const selectedPatient = mockPatients.find(
     (patient) => patient.id === selectedPatientId,
@@ -85,51 +89,57 @@ const patientFilter = useCallback(
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[320px_1fr]">
-        <div className="space-y-3">
+      {normalizedQuery && (
+        <div className="mt-6">
           {visiblePatients.length === 0 && (
             <p className="rounded-xl border border-slate-200 p-4 text-sm text-slate-600">
               No hay pacientes atendidos que coincidan.
             </p>
           )}
 
-          {visiblePatients.map((patient) => (
-            <button
-              key={patient.id}
-              type="button"
-              onClick={() => {
-                setSelectedPatientId(patient.id);
-                setShowDiagnostics(false);
-              }}
-              className={`w-full rounded-xl border p-4 text-left transition ${selectedPatientId === patient.id
-                ? "border-blue-500 bg-blue-50"
-                : "border-slate-200 hover:bg-slate-50"
-                }`}
-            >
-              <p className="font-semibold text-slate-900">{patient.name}</p>
-              <p className="text-sm text-slate-600">
-                {patient.age} años · {patient.phone}
-              </p>
-              <p className="mt-1 text-xs font-semibold text-slate-500">
-                {
-                  records.filter((record) => record.patientId === patient.id)
-                    .length
-                }{" "}
-                expedientes
-              </p>
-            </button>
-          ))}
+          {visiblePatients.length > 0 && (
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {visiblePatients.map((patient) => (
+                <button
+                  key={patient.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedPatientId(patient.id);
+                    setShowDiagnostics(false);
+                  }}
+                  className={`min-w-[260px] shrink-0 rounded-xl border p-4 text-left transition ${
+                    selectedPatientId === patient.id
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-slate-200 hover:bg-slate-50"
+                  }`}
+                >
+                  <p className="font-semibold text-slate-900">{patient.name}</p>
+                  <p className="text-sm text-slate-600">
+                    {patient.age} años · {patient.phone}
+                  </p>
+                  <p className="mt-1 text-xs font-semibold text-slate-500">
+                    {
+                      records.filter((record) => record.patientId === patient.id)
+                        .length
+                    }{" "}
+                    expedientes
+                  </p>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
+      )}
 
-        <div className="rounded-2xl border border-slate-200 p-5">
-          {!selectedPatient && (
+      <div className="mt-6 rounded-2xl border border-slate-200 p-5">
+        {!selectedPatient && (
             <p className="text-sm text-slate-600">
               Selecciona un paciente para crear expediente y revisar sus
               diagnósticos.
             </p>
           )}
 
-          {selectedPatient && (
+        {selectedPatient && (
             <>
               <h3 className="text-xl font-bold text-slate-900">
                 {selectedPatient.name}
@@ -151,7 +161,6 @@ const patientFilter = useCallback(
               </div>
             </>
           )}
-        </div>
       </div>
     </section>
   );

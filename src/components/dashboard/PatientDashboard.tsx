@@ -3,9 +3,8 @@
 // src/components/dashboard/PatientDashboard.tsx
 
 import { useState } from "react";
-
 import type { User } from "../../types/user.types";
-
+import { NavBarForUsers } from "../layout/NavBarForUsers";
 import { PatientMetricsGrid } from "./PatientMetricsGrid";
 import { CreateAppointmentForm } from "./CreateAppointmentForm";
 import { PatientAppointments } from "./PatientAppointments";
@@ -18,14 +17,11 @@ interface PatientDashboardProps {
   user: User;
 }
 
-export function PatientDashboard({
-  user,
-}: PatientDashboardProps) {
-  const [isProfileModalOpen, setIsProfileModalOpen] =
-    useState(false);
+export function PatientDashboard({ user }: PatientDashboardProps) {
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-slate-100 px-6 py-10">
+    <main className="min-h-screen bg-slate-100 px-6 py-10 pt-25">
       <section className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <h1 className="text-4xl font-bold text-slate-900">
@@ -36,7 +32,7 @@ export function PatientDashboard({
             Editar perfil
           </Button>
         </div>
-
+        <NavBarForUsers></NavBarForUsers>
         <PatientMetricsGrid user={user} />
 
         <CreateAppointmentForm user={user} />
