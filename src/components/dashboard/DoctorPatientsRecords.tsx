@@ -45,7 +45,6 @@ const patientFilter = useCallback(
     items: mockPatients,
     filter: patientFilter,
     delay: 350,
-    cacheNamespace: "doctor-patient-record-search",
   });
   
    if (!doctor) return null;
