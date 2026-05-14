@@ -42,7 +42,7 @@ interface GranularErrorBoundaryProps {
   fallback?: React.ComponentType<FallbackProps>;
 }
 
-// "Escudo" reutilizable. Protege los componentes hijos delegando el manejo de errores.
+// Protege los componentes hijos delegando el manejo de errores.
 export function GranularErrorBoundary({ children, fallback }: GranularErrorBoundaryProps) {
   // ZERO PROP DRILLING: Consumimos el reset global de React Query para reintentar peticiones caídas sin pasar props.
   const { reset } = useQueryErrorResetBoundary();
