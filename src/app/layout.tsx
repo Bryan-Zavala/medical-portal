@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/providers/query-provider";
 import { FocusSyncProvider } from "@/providers/focus-sync-provider";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
 import { Toaster } from "sonner";
 
 /* Carga fuentes de forma optimizada con next/font*/
@@ -30,27 +29,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <html
-    //   lang="en"
-    //   className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    // >
-    //   <body className="min-h-full flex flex-col">{children}</body>
-    // </html>
-    /* Idioma: accesibilidad, lectores de pantalla, SEO, semántica correcta del documento*/
     <html lang="es" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
         <QueryProvider>
           <FocusSyncProvider>
-            {/* <Navbar /> */}
             <main className="flex-1">{children}</main>
           </FocusSyncProvider>
         </QueryProvider>
 
-        <Toaster
-          position="top-right"
-          richColors
-          closeButton
-        />
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   );

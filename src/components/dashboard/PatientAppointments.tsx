@@ -30,11 +30,12 @@ const statusClass = {
 
 export function PatientAppointments({ user }: PatientAppointmentsProps) {
   const appointments = useAppointmentStore((state) => state.appointments);
-  const updateAppointmentStatus = useAppointmentStore(
-    (state) => state.updateAppointmentStatus,
+  const deleteAppointment = useAppointmentStore(
+    (state) => state.deleteAppointment,
   );
   const [appointmentToCancel, setAppointmentToCancel] =
     useState<Appointment | null>(null);
+  const [toast, setToast] = useState("");
 
   const patient = mockPatients.find((patient) => patient.userId === user.id);
 
@@ -46,13 +47,38 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
 
   const confirmCancel = () => {
     if (!appointmentToCancel) return;
-    //La función es async, pero no necesitamos esperar el resultado porque el optimistic update ya actualiza la UI inmediatamente.
-    void updateAppointmentStatus(appointmentToCancel.id, "cancelled");
+
+    deleteAppointment(appointmentToCancel.id);
     setAppointmentToCancel(null);
+    setToast("Cita cancelada");
+    window.setTimeout(() => setToast(""), 3000);
+  };
+
+  const handleDeleteCancelledRequest = (appointmentId: string) => {
+    deleteAppointment(appointmentId);
+  };
+
+  const handleRequestAnotherSchedule = (appointment: Appointment) => {
+    window.dispatchEvent(
+      new CustomEvent<Appointment>("appointment:reschedule", {
+        detail: appointment,
+      }),
+    );
+
+    document
+      .getElementById("create-appointment-form")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
-    <section className="mt-8 rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
+    <>
+      {toast && (
+        <div className="fixed left-1/2 top-6 z-50 -translate-x-1/2 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 font-semibold text-green-700 shadow-lg">
+          {toast}
+        </div>
+      )}
+
+      <section className="mt-8 rounded-2xl bg-white p-6 shadow-sm border border-slate-200">
       <h2 className="text-2xl font-bold text-slate-900">Mis citas</h2>
 
       <div className="mt-5 space-y-4">
@@ -106,6 +132,26 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
                     Cancelar cita
                   </button>
                 )}
+
+                {appointment.status === "cancelled" && (
+                  <div className="flex flex-col gap-3 sm:items-end">
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteCancelledRequest(appointment.id)}
+                      className="rounded-lg bg-slate-700 px-4 py-2 text-sm font-semibold text-white"
+                    >
+                      Eliminar solicitud
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleRequestAnotherSchedule(appointment)}
+                      className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white"
+                    >
+                      Solicitar otro horario
+                    </button>
+                  </div>
+                )}
               </div>
             </article>
           );
@@ -135,6 +181,7 @@ export function PatientAppointments({ user }: PatientAppointmentsProps) {
           </button>
         </div>
       </Modal>
-    </section>
+      </section>
+    </>
   );
 }

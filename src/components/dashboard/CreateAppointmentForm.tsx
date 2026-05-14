@@ -2,7 +2,8 @@
 
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type { Appointment } from "@/types/appointment.types";
 import type { User } from "@/types/user.types";
 import { mockDoctors } from "@/data/mockDoctors";
 import { mockPatients } from "@/data/mockPatients";
@@ -39,6 +40,31 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
   const [toast, setToast] = useState("");
 
   const minDateTime = useMemo(() => getCurrentDateTimeLocal(), []);
+
+  useEffect(() => {
+    const handleRescheduleRequest = (event: Event) => {
+      const appointment = (event as CustomEvent<Appointment>).detail;
+
+      if (!appointment) return;
+
+      setSelectedSpecialty(appointment.specialty);
+      setSpecialtyQuery(appointment.specialty);
+      setIsSpecialtyPanelOpen(false);
+      setDoctorId(appointment.doctorId);
+      setStartTime("");
+      setReason(appointment.reason);
+      setMessage("Selecciona un nuevo día y horario para reenviar la solicitud.");
+    };
+
+    window.addEventListener("appointment:reschedule", handleRescheduleRequest);
+
+    return () => {
+      window.removeEventListener(
+        "appointment:reschedule",
+        handleRescheduleRequest,
+      );
+    };
+  }, []);
 
   const getEndTime = (value: string) => {
     const endDate = new Date(value);
@@ -235,6 +261,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
       </section>
 
       <form
+        id="create-appointment-form"
         onSubmit={handleSubmit}
         className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
       >

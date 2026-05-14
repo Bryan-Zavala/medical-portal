@@ -2,6 +2,7 @@
 
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -62,7 +63,21 @@ export function LoginForm() {
   };
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
+    <section className="relative flex min-h-screen items-center justify-center bg-slate-100 px-4">
+      <button
+        type="button"
+        onClick={() => router.push("/")}
+        className="absolute flex items-center left-6 top-6 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+      >
+        <Image
+          src="/arrow.png"
+          alt=""
+          width={20}
+          height={20}
+          className="mr-5"
+        />
+        Volver al inicio
+      </button>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg"

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
+import Image from "next/image";
 
 export function Header() {
   return (
@@ -23,7 +24,9 @@ export function Header() {
           <Link href="/#portal">Nuestra plataforma</Link>
           <Link href="/#services">Servicios</Link>
           <Link href="/#articles">Artículos</Link>
+          <Link href="#appointments">Instrucciones para citas</Link>
           <Link href="/appointments" prefetch={false}>Citas</Link>
+        
         </nav>
 
         <Link href="/login" prefetch={false}>
