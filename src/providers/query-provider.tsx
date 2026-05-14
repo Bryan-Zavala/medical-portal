@@ -6,8 +6,19 @@ import {
   QueryCache,
   MutationCache,
 } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import dynamic from "next/dynamic";
 import * as React from "react";
+
+const ReactQueryDevtools =
+  process.env.NODE_ENV === "development"
+    ? dynamic(
+        () =>
+          import("@tanstack/react-query-devtools").then(
+            (module) => module.ReactQueryDevtools,
+          ),
+        { ssr: false },
+      )
+    : null;
 
 // 1. Fábrica de clientes: Crea una instancia limpia y configurada
 function makeQueryClient() {
@@ -74,7 +85,12 @@ export function QueryProvider({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       {children}
       {/* Herramienta visual inyectada solo en desarrollo. En producción se auto-elimina */}
-      <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
+      {ReactQueryDevtools ? (
+        <ReactQueryDevtools
+          initialIsOpen={false}
+          buttonPosition="bottom-right"
+        />
+      ) : null}
     </QueryClientProvider>
   );
 }

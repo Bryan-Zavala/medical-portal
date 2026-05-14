@@ -48,7 +48,6 @@ export function DoctorPatientsRecords({ user }: DoctorPatientsRecordsProps) {
     items: mockPatients,
     filter: patientFilter,
     delay: 350,
-    cacheNamespace: "doctor-patient-record-search",
   });
 
 

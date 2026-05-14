@@ -9,6 +9,7 @@ import { PatientMetricsGrid } from "./PatientMetricsGrid";
 import { CreateAppointmentForm } from "./CreateAppointmentForm";
 import { PatientAppointments } from "./PatientAppointments";
 import { PatientMedicalRecords } from "./PatientMedicalRecords";
+import { GranularErrorBoundary } from "@/components/atoms/GranularErrorBoundary";
 import { ProfileEditModal } from "./ProfileEditModal";
 
 import { Button } from "@/components/atoms/Button";
@@ -33,13 +34,23 @@ export function PatientDashboard({ user }: PatientDashboardProps) {
           </Button>
         </div>
         <NavBarForUsers></NavBarForUsers>
-        <PatientMetricsGrid user={user} />
+        
 
-        <CreateAppointmentForm user={user} />
+        <GranularErrorBoundary>
+          <PatientMetricsGrid user={user} />
+        </GranularErrorBoundary>
 
-        <PatientAppointments user={user} />
+        <GranularErrorBoundary>
+          <CreateAppointmentForm user={user} />
+        </GranularErrorBoundary>
 
-        <PatientMedicalRecords user={user} />
+        <GranularErrorBoundary>
+          <PatientAppointments user={user} />
+        </GranularErrorBoundary>
+
+        <GranularErrorBoundary>
+          <PatientMedicalRecords user={user} />
+        </GranularErrorBoundary>
 
         <ProfileEditModal
           isOpen={isProfileModalOpen}

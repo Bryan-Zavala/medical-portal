@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface DebouncedCachedSearchOptions<T> {
   query: string;
   items: readonly T[];
   filter: (item: T, normalizedQuery: string) => boolean;
   delay?: number;
-  cacheNamespace?: string;
 }
 
 export function useDebouncedCachedSearch<T>({
@@ -15,13 +14,13 @@ export function useDebouncedCachedSearch<T>({
   items,
   filter,
   delay = 300,
-  cacheNamespace = "default",
 }: DebouncedCachedSearchOptions<T>) {
+  // Estado local para almacenar el término de búsqueda con retraso (debounce)
   const [debouncedQuery, setDebouncedQuery] = useState(query);
-  const cacheRef = useRef<Map<string, T[]>>(new Map());
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
+      // Solo actualiza el estado si el usuario deja de escribir durante el tiempo definido
       setDebouncedQuery(query);
     }, delay);
 
@@ -31,19 +30,14 @@ export function useDebouncedCachedSearch<T>({
   const normalizedQuery = debouncedQuery.trim().toLocaleLowerCase("es-ES");
   const isSearching = query !== debouncedQuery;
 
+  // Memoizamos los resultados. En React, `useMemo` es la forma oficial de "cachear" 
+  // cálculos locales. Se re-calculará de forma automática y segura SOLO si el 
+  // texto de búsqueda, el array de items o la función de filtro cambian.
   const results = useMemo(() => {
-    const cacheKey = `${cacheNamespace}:${normalizedQuery}`;
-    const cachedResults = cacheRef.current.get(cacheKey);
-
-    if (cachedResults) return cachedResults;
-
-    const nextResults = normalizedQuery
+    return normalizedQuery
       ? items.filter((item) => filter(item, normalizedQuery))
       : items;
-
-    cacheRef.current.set(cacheKey, nextResults);
-    return nextResults;
-  }, [cacheNamespace, filter, items, normalizedQuery]);
+  }, [filter, items, normalizedQuery]);
 
   return {
     debouncedQuery,

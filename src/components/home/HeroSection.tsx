@@ -2,9 +2,21 @@ import Link from "next/link";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
 import { Header } from "../layout/Header";
+import Image from "next/image";
+
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-[url('/Header-image.jpg')] bg-cover bg-center bg-no-repeat">
+    <section className="relative min-h-screen overflow-hidden">
+      <Image
+        src="/Header-image.jpg"
+        alt="Fondo del portal médico"
+        fill
+        priority
+        fetchPriority="high"
+        quality={20}
+        className="object-cover object-center -z-10"
+        sizes="100vw"
+      />
       <Header></Header>
       <div className="absolute inset-0 bg-white/65" />
 
@@ -24,7 +36,7 @@ export function HeroSection() {
           </p>
 
           <div className="flex gap-4">
-            <Link href="/login" prefetch={true}>
+            <Link href="/login" prefetch={false}>
               <Button>Acceder al portal</Button>
             </Link>
 

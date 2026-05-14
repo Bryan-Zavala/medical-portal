@@ -14,8 +14,6 @@ export interface PublicMetrics {
  * En un backend real, aquí viviría la llamada a base de datos o API interna.
  */
 export async function getPublicMetrics(): Promise<PublicMetrics> {
-  await new Promise((resolve) => setTimeout(resolve, 1800));
-
   const attendedPatients = new Set(
     mockMedicalRecords.map((record) => record.patientId),
   ).size;

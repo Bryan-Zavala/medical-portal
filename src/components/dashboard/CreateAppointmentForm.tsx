@@ -84,7 +84,6 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
       items: mockSpecialties,
       filter: specialtyFilter,
       delay: 350,
-      cacheNamespace: "patient-specialty-search",
     });
 
   const availableDoctors = useMemo(
@@ -197,6 +196,8 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
         <div className="mt-5 grid gap-3">
           <div className="relative">
             <input
+              role="combobox"
+              aria-label="Buscar especialidad"
               type="search"
               value={specialtyQuery}
               onFocus={() => {
@@ -270,6 +271,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
           {selectedSpecialty && (
             <select
               value={doctorId}
+              aria-label="Seleccionar médico"
               onChange={(event) => {
                 setDoctorId(event.target.value);
                 setStartTime("");
@@ -298,6 +300,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
           {doctorId && (
             <input
               type="datetime-local"
+              aria-label="Fecha y hora de la cita"
               value={startTime}
               min={minDateTime}
               onChange={(event) => {
@@ -320,6 +323,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
           {doctorId && (
             <textarea
               value={reason}
+              aria-label="Motivo de la cita detallado"
               onChange={(event) => {
                 setReason(event.target.value);
                 setMessage("");
