@@ -37,7 +37,6 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
           </Button>
         </div>
 
-<<<<<<< HEAD
         <GranularErrorBoundary>
           <DoctorMetricsGrid user={user} />
         </GranularErrorBoundary>
@@ -47,7 +46,6 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
         <GranularErrorBoundary>
           <DoctorPatientsRecords user={user} />
         </GranularErrorBoundary>
-=======
         <DoctorMetricsGrid user={user} />
         <DoctorAppointments user={user} />
         <DoctorPatientsRecords user={user} />
@@ -59,7 +57,6 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
           initialName={user.name}
           initialEmail={user.email}
         />
->>>>>>> develop
       </section>
     </main>
   );
