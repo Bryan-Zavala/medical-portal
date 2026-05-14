@@ -8,28 +8,25 @@ export function Header() {
     <header className="fixed left-0 top-0 z-50 w-full bg-white/95 border-b border-white/30">
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="text-xl font-bold text-sky-700 mt-1">
-          <Image 
-            src="/logo-remove.png" 
-            alt="Logo del Portal Médico" 
-            width={150} 
-            height={50} 
-            priority
-            unoptimized
-            className="w-37.5 h-12.5 object-contain"
+          <Image
+            src="/logo-remove.webp"
+            alt="Logo del Portal Médico"
+            width={200}
+            height={200}
+            sizes="(min-width: 768px) 160px, 120px"
+            className="h-16 w-auto object-contain scale-200 origin-left"
           />
         </Link>
 
         <nav className="hidden gap-6 text-sm font-medium md:flex">
-          <Link href="/#about">Quiénes somos</Link>
-          <Link href="/#portal">Nuestra plataforma</Link>
-          <Link href="/#services">Servicios</Link>
-          <Link href="/#articles">Artículos</Link>
+          <Link href="/#about" prefetch={false}>Quiénes somos</Link>
+          <Link href="/#portal" prefetch={false}>Nuestra plataforma</Link>
+          <Link href="/#services" prefetch={false}>Servicios</Link>
+          <Link href="/#articles" prefetch={false}>Artículos</Link>
           <Link href="/appointments" prefetch={false}>Citas</Link>
         </nav>
 
-        <Link href="/login" prefetch={false}>
-          <Button>Acceder</Button>
-        </Link>
+        <Button asLink="/login" prefetch={false}>Acceder</Button>
       </Container>
     </header>
   );

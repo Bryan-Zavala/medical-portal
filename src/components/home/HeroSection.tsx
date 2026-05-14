@@ -13,7 +13,7 @@ export function HeroSection() {
         fill
         priority
         fetchPriority="high"
-        quality={20}
+        quality={75}
         className="object-cover object-center -z-10"
         sizes="100vw"
       />
@@ -36,13 +36,9 @@ export function HeroSection() {
           </p>
 
           <div className="flex gap-4">
-            <Link href="/login" prefetch={false}>
-              <Button>Acceder al portal</Button>
-            </Link>
+            <Button asLink="/login" prefetch={false}>Acceder al portal</Button>
 
-            <Link href="/#services">
-              <Button variant="secondary">Ver servicios</Button>
-            </Link>
+            <Button asLink="/#services" variant="secondary">Ver servicios</Button>
           </div>
         </div>
       </Container>
