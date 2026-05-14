@@ -1,9 +1,12 @@
 import React from "react";
+import Link from "next/link";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
     variant?: "primary" | "secondary" | "danger" | "success";
     size?: "sm" | "md" | "lg";
+    asLink?: string;
+    prefetch?: boolean;
 };
 
 export function Button({
@@ -12,6 +15,8 @@ export function Button({
     size = "md",
     className = "",
     type = "button",
+    asLink,
+    prefetch,
     ...props
 }: ButtonProps) {
     const baseStyles =
@@ -36,6 +41,18 @@ export function Button({
         md: "px-4 py-2 text-sm",
         lg: "px-6 py-3 text-base",
     };
+
+    if (asLink) {
+        return (
+            <Link
+                href={asLink}
+                prefetch={prefetch}
+                className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+            >
+                {children}
+            </Link>
+        );
+    }
 
     return (
         <button

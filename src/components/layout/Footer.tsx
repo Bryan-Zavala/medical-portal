@@ -18,16 +18,16 @@ export function Footer() {
           <h3 className="font-semibold text-white">Navegación</h3>
 
           <nav className="mt-3 flex flex-col gap-2 text-sm">
-            <Link href="/" className="hover:text-white">
+            <Link href="/" className="hover:text-white" prefetch={false}>
               Inicio
             </Link>
-            <Link href="/login" className="hover:text-white">
+            <Link href="/login" className="hover:text-white" prefetch={false}>
               Acceder
             </Link>
-            <Link href="/dashboard" className="hover:text-white">
+            <Link href="/dashboard" className="hover:text-white" prefetch={false}>
               Dashboard
             </Link>
-            <Link href="/appointments" className="hover:text-white">
+            <Link href="/appointments" className="hover:text-white" prefetch={false}>
               Citas
             </Link>
           </nav>

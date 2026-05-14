@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     qualities: [20, 50, 75, 100],
+    formats: ["image/avif", "image/webp"],
   },
   async headers() {
     return [

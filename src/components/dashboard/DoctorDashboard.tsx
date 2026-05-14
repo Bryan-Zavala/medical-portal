@@ -47,9 +47,6 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
         <GranularErrorBoundary>
           <DoctorPatientsRecords user={user} />
         </GranularErrorBoundary>
-        <DoctorMetricsGrid user={user} />
-        <DoctorAppointments user={user} />
-        <DoctorPatientsRecords user={user} />
 
         {/* Modal edición perfil */}
         <ProfileEditModal

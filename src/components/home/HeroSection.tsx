@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
 import { Header } from "../layout/Header";
@@ -8,12 +7,12 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen overflow-hidden">
       <Image
-        src="/Header-image.jpg"
+        src="/Header-image_1.webp"
         alt="Fondo del portal médico"
         fill
         priority
         fetchPriority="high"
-        quality={20}
+        quality={50}
         className="object-cover object-center -z-10"
         sizes="100vw"
       />
@@ -21,7 +20,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-white/65" />
 
       <Container className="relative z-10 flex min-h-screen items-center pt-16">
-        <div className="max-w-2xl space-y-6 ml-10">
+        <div className="max-w-2xl space-y-6">
           <p className="text-sm font-semibold uppercase tracking-wider text-sky-700">
             Portal médico digital
           </p>
@@ -36,13 +35,9 @@ export function HeroSection() {
           </p>
 
           <div className="flex gap-4">
-            <Link href="/login" prefetch={false}>
-              <Button>Acceder al portal</Button>
-            </Link>
+            <Button asLink="/login" prefetch={false}>Acceder al portal</Button>
 
-            <Link href="/#services">
-              <Button variant="secondary">Ver servicios</Button>
-            </Link>
+            <Button asLink="/#services" variant="secondary" prefetch={false}>Ver servicios</Button>
           </div>
         </div>
       </Container>

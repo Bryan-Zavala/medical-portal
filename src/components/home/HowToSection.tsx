@@ -12,7 +12,7 @@ export function HowToSection() {
             un correo a{" "}
             <Link
               href="mailto:soporte@mediportal.com"
-              className="text-[#2996fc]"
+              className="text-blue-700 font-semibold hover:underline"
             >
               soporte@mediportal.com
             </Link>{" "}
@@ -24,17 +24,16 @@ export function HowToSection() {
         </div>
 
         <div style={{ maxWidth: "800px", margin: "0 auto" }}>
-          {/* Usamos preload="none" para mejorar el rendimiento inicial de la página */}
           <video
             width="100%"
             controls
             preload="none"
-            loop
-            autoPlay={true} // Cambia a true si quieres que se reproduzca solo
-            muted={true} // Obligatorio si usas autoPlay en la mayoría de navegadores
+            poster="/Header-image_1.webp"
             className="rounded-2xl shadow-xl"
+            aria-label="Video tutorial para solicitar citas"
           >
             <source src="/video-cita.mp4" type="video/mp4" />
+            <track kind="captions" srcLang="es" label="Español" src="/captions.vtt" />
             Tu navegador no soporta la reproducción de video.
           </video>
         </div>

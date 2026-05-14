@@ -13,7 +13,7 @@ export function Navbar() {
         <Link
           key={route.href}
           href={route.href}
-          prefetch={true}
+          prefetch={false}
           className="text-sm font-medium text-muted hover:text-primary"
         >
           {route.label}
