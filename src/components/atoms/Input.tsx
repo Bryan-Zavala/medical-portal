@@ -22,6 +22,7 @@ export function Input({
                 focus:border-primary
                 focus:ring-2
                 focus:ring-primary
+                hover:border-slate-300
                 ${className}
         `}
             {...props}
