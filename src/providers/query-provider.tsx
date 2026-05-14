@@ -44,7 +44,7 @@ function makeQueryClient() {
     defaultOptions: {
       queries: {
         staleTime: 1000 * 60 * 5, // 5 minutos de frescura
-        refetchOnWindowFocus: false, // Evita peticiones al cambiar de pestaña
+        refetchOnWindowFocus: true, // Refetch inteligente: solo revalida al volver a foco si la query ya está stale
         retry: 2,
         // Resiliencia: Exponential Backoff
         //proteccion hacia el servidor

@@ -15,7 +15,7 @@ export function Button({
     ...props
 }: ButtonProps) {
     const baseStyles =
-        "rounded-lg font-medium transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60";
+        "rounded-lg font-medium transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60";
 
     const variantStyles = {
         primary:

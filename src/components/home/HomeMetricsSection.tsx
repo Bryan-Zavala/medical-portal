@@ -1,7 +1,7 @@
 import { Container } from "@/components/atoms/Container";
 import { mockDoctors } from "@/data/mockDoctors";
 
-const STATIC_FACILITIES = 20;
+const STATIC_FACILITIES = 10;
 
 interface HomeMetricsSectionProps {
   initialPatientsAttended?: number;
@@ -18,8 +18,9 @@ export function HomeMetricsSection({
 
   const professionalSpecialties =
     initialProfessionalSpecialties ??
-    new Set(mockDoctors.map((doctor) => doctor.specialty.trim()).filter(Boolean))
-      .size;
+    new Set(
+      mockDoctors.map((doctor) => doctor.specialty.trim()).filter(Boolean),
+    ).size;
 
   const metrics = [
     {
