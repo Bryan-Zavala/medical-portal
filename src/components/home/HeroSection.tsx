@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
 import { Header } from "../layout/Header";
@@ -21,7 +20,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-white/65" />
 
       <Container className="relative z-10 flex min-h-screen items-center pt-16">
-        <div className="max-w-2xl space-y-6 ml-10">
+        <div className="max-w-2xl space-y-6">
           <p className="text-sm font-semibold uppercase tracking-wider text-sky-700">
             Portal médico digital
           </p>
