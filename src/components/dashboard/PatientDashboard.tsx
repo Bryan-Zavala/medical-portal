@@ -38,27 +38,21 @@ export function PatientDashboard({
           </Button>
         </div>
 
-<<<<<<< HEAD
         <GranularErrorBoundary>
           <PatientMetricsGrid user={user} />
         </GranularErrorBoundary>
+
         <GranularErrorBoundary>
           <CreateAppointmentForm user={user} />
         </GranularErrorBoundary>
+
         <GranularErrorBoundary>
           <PatientAppointments user={user} />
         </GranularErrorBoundary>
+
         <GranularErrorBoundary>
           <PatientMedicalRecords user={user} />
         </GranularErrorBoundary>
-=======
-        <PatientMetricsGrid user={user} />
-
-        <CreateAppointmentForm user={user} />
-
-        <PatientAppointments user={user} />
-
-        <PatientMedicalRecords user={user} />
 
         <ProfileEditModal
           isOpen={isProfileModalOpen}
@@ -66,7 +60,6 @@ export function PatientDashboard({
           initialName={user.name}
           initialEmail={user.email}
         />
->>>>>>> develop
       </section>
     </main>
   );
