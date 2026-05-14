@@ -13,7 +13,7 @@ export function Container({
         <div
             className={`
                 w-full
-                max-w-7x1
+                max-w-7xl
                 mx-auto
                 px-4
                 md:px-6
