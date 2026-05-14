@@ -5,6 +5,7 @@ import { PatientMetricsGrid } from "./PatientMetricsGrid";
 import { CreateAppointmentForm } from "./CreateAppointmentForm";
 import { PatientAppointments } from "./PatientAppointments";
 import { PatientMedicalRecords } from "./PatientMedicalRecords";
+import { GranularErrorBoundary } from "@/components/atoms/GranularErrorBoundary";
 
 interface PatientDashboardProps {
   user: User;
@@ -18,10 +19,18 @@ export function PatientDashboard({ user }: PatientDashboardProps) {
           Bienvenido {user.name}
         </h1>
 
-        <PatientMetricsGrid user={user} />
-        <CreateAppointmentForm user={user} />
-        <PatientAppointments user={user} />
-        <PatientMedicalRecords user={user} />
+        <GranularErrorBoundary>
+          <PatientMetricsGrid user={user} />
+        </GranularErrorBoundary>
+        <GranularErrorBoundary>
+          <CreateAppointmentForm user={user} />
+        </GranularErrorBoundary>
+        <GranularErrorBoundary>
+          <PatientAppointments user={user} />
+        </GranularErrorBoundary>
+        <GranularErrorBoundary>
+          <PatientMedicalRecords user={user} />
+        </GranularErrorBoundary>
       </section>
     </main>
   );
