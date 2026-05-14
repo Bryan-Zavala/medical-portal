@@ -14,7 +14,7 @@ export function Header() {
           <Link href="#about">Quiénes somos</Link>
           <Link href="#portal">Nuestra plataforma</Link>
           <Link href="#services">Servicios</Link>
-          <Link href="/appointments">Citas</Link>
+          <Link href="/appointments"></Link>
         </nav>
 
         <Link href="/login">
