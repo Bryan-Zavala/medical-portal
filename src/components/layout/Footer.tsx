@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="bg-slate-950 px-6 py-10 text-slate-300">
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
         <div>
-          <h2 className="text-xl font-bold text-white">MediPortal</h2>
+          <h2 className="text-xl font-bold text-white">Salud conecta</h2>
           <p className="mt-3 text-sm leading-6">
             Portal médico para gestionar citas, pacientes y acceso seguro según
             rol.
@@ -45,7 +45,7 @@ export function Footer() {
       </div>
 
       <div className="mx-auto mt-8 max-w-6xl border-t border-slate-800 pt-6 text-center text-sm text-slate-500">
-        © 2026 MediPortal. Todos los derechos reservados.
+        © 2026 Globant Trainee. Todos los derechos reservados.
       </div>
     </footer>
   );

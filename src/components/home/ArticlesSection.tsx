@@ -1,50 +1,42 @@
-const articles = [
-  {
-    title: "Consejos para preparar una consulta médica",
-    description:
-      "Lleva tus síntomas anotados, medicación actual y preguntas importantes.",
-  },
-  {
-    title: "Importancia del seguimiento médico",
-    description:
-      "Las revisiones periódicas ayudan a detectar problemas a tiempo.",
-  },
-  {
-    title: "Gestión digital de citas",
-    description:
-      "Un sistema online reduce errores y mejora la organización clínica.",
-  },
-];
+import { mockSpecialtyServices } from "../../data/mockSpecialtyServices";
 
 export function ArticlesSection() {
   return (
-    <section className="px-6 py-20 bg-white">
+    <section id="services" className="bg-white px-6 py-20">
       <div className="mx-auto max-w-6xl">
-        <p className="text-sm font-semibold uppercase text-blue-600">
-          Artículos
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-blue-600">
+          Nuestros servicios
         </p>
 
         <h2 className="mt-3 text-4xl font-bold text-slate-900">
-          Información útil para pacientes
+          Especialidades médicas disponibles
         </h2>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {articles.map((article) => (
-            <article
-              key={article.title}
-              className="rounded-2xl border border-slate-200 p-6"
-            >
-              <h3 className="text-xl font-semibold text-slate-900">
-                {article.title}
-              </h3>
+        <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">
+          Ponemos a tu disposición distintas áreas de atención sanitaria para
+          ofrecer un seguimiento más completo y especializado. Contamos con
+          varios centros médicos.
+        </p>
 
-              <p className="mt-3 text-slate-600">{article.description}</p>
+        <div className="mt-10 overflow-hidden">
+          <div className="flex w-max animate-specialties-scroll gap-6 pt-0 mt-5">
+            {[...mockSpecialtyServices, ...mockSpecialtyServices].map(
+              (service, index) => (
+                <article
+                  key={`${service.specialty}-${index}`}
+                  className="w-[320px] shrink-0 rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-sm"
+                >
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    {service.specialty}
+                  </h3>
 
-              <button className="mt-5 text-sm font-semibold text-blue-600 hover:underline">
-                Leer más
-              </button>
-            </article>
-          ))}
+                  <p className="mt-3 leading-7 text-slate-600">
+                    {service.description}
+                  </p>
+                </article>
+              ),
+            )}
+          </div>
         </div>
       </div>
     </section>

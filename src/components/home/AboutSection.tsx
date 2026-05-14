@@ -1,6 +1,6 @@
 export function AboutSection() {
   return (
-    <section className="px-6 py-20 bg-white">
+    <section id="about" className="px-6 py-20 bg-white">
       <div className="mx-auto max-w-6xl grid gap-10 md:grid-cols-2 items-center">
         <div>
           <p className="text-sm font-semibold uppercase text-blue-600">
@@ -12,9 +12,14 @@ export function AboutSection() {
           </h2>
 
           <p className="mt-5 text-slate-600 leading-7">
-            Nuestra plataforma permite gestionar citas médicas, consultar
-            información relevante y facilitar la comunicación entre pacientes y
-            médicos de forma clara, segura y organizada.
+            En Salud Conecta entendemos que detrás de cada consulta hay una
+            persona que busca bienestar y tranquilidad. Nacimos con la misión de
+            humanizar la medicina, combinando la calidez en el trato con la
+            excelencia clínica. Nuestro equipo de profesionales está
+            comprometido con ofrecer una atención integral y personalizada para
+            cada etapa de tu vida. No solo tratamos síntomas; cuidamos de
+            personas. Porque para nosotros, tu salud es lo primero, pero tu
+            bienestar emocional es nuestro motor diario
           </p>
         </div>
 
@@ -24,8 +29,9 @@ export function AboutSection() {
           </h3>
 
           <p className="mt-4 text-slate-600 leading-7">
-            Centralizar la gestión de citas y datos médicos, diferenciando
-            correctamente los permisos según el rol del usuario.
+            Centralizar la gestión de citas y datos médicos gracias a nuestra
+            plataforma. Podras realizar las citas médicas que necesites de
+            manera rápida y segura.
           </p>
         </div>
       </div>
