@@ -15,7 +15,6 @@ import { Footer } from "@/components/layout/Footer";
 import { StreamingMetricsSection } from "@/components/home/StreamingMetricsSection";
 import { Suspense } from "react";
 import { StreamingMetricsSkeleton } from "@/components/home/StreamingMetricsSekeleton";
-export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
