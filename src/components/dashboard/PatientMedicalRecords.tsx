@@ -6,6 +6,7 @@ import type { User } from "@/types/user.types";
 import { mockDoctors } from "@/data/mockDoctors";
 import { mockPatients } from "@/data/mockPatients";
 import { useMedicalRecordStore } from "@/store/useMedicalRecordStore";
+import { generateMedicalRecordPdf } from "@/lib/pdf/generateMedicalRecordPdf";
 
 interface PatientMedicalRecordsProps {
   user: User;
@@ -33,9 +34,18 @@ export function PatientMedicalRecords({ user }: PatientMedicalRecordsProps) {
 
           return (
             <article key={record.id} className="rounded-xl border border-slate-200 p-4">
-              <p className="text-sm font-semibold text-slate-500">
-                {new Date(record.createdAt).toLocaleString()} · Dr. {doctor?.name ?? "Sin asignar"}
-              </p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <p className="text-sm font-semibold text-slate-500">
+                  {new Date(record.createdAt).toLocaleString()} · Dr. {doctor?.name ?? "Sin asignar"}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => generateMedicalRecordPdf({ record, patient, doctor })}
+                  className="inline-flex shrink-0 items-center justify-center rounded-lg border border-sky-200 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-800 transition hover:bg-sky-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-600 focus-visible:ring-offset-2"
+                >
+                  Descargar expediente
+                </button>
+              </div>
               <h3 className="mt-2 text-lg font-bold text-slate-900">{record.diagnosis}</h3>
               <p className="mt-2 text-sm text-slate-700">{record.notes}</p>
               <p className="mt-2 text-sm text-slate-600">

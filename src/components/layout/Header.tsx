@@ -11,9 +11,9 @@ export function Header() {
         </Link>
 
         <nav className="hidden gap-6 text-sm font-medium md:flex">
-          <Link href="/#about">Quiénes somos</Link>
-          <Link href="/#services">Qué hacemos</Link>
-          <Link href="/#articles">Artículos</Link>
+          <Link href="#about">Quiénes somos</Link>
+          <Link href="#portal">Nuestra plataforma</Link>
+          <Link href="#services">Servicios</Link>
           <Link href="/appointments">Citas</Link>
         </nav>
 
