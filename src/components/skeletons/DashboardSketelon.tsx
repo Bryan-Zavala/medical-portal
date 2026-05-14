@@ -2,17 +2,39 @@ import { DashboardMetricsSkeleton } from "./DashboardMetricsSkeleton";
 
 export function DashboardSkeleton() {
     return (
-        <main className="min-h-screen bg-background p-6">
-            <section className="mb-8">
-                <div className="mb-3 h-8 w-64 rounded bg-secondary animate-pulse" />
-                <div className="h-4 w-96 rounded bg-secondary animate-pulse" />
-            </section>
+        <main className="min-h-screen bg-slate-50 px-6 py-10">
+            <section className="mx-auto max-w-6xl">
+                <div className="animate-pulse">
+                    <div className="mb-4 h-10 w-72 rounded-2xl bg-slate-200" />
 
-            <DashboardMetricsSkeleton />
+                    <div className="mb-8 h-4 w-96 rounded-full bg-slate-100" />
+                </div>
 
-            <section className="mt-6 grid gap-4 lg:grid-cols-2">
-                <div className="h-72 rounded-lg border border-border bg-surface p-4 shadow-md animate-pulse" />
-                <div className="h-72 rounded-lg border border-border bg-surface p-4 shadow-md animate-pulse" />
+                <DashboardMetricsSkeleton />
+
+                <section className="mt-8 grid gap-6 lg:grid-cols-2">
+                    <div
+                        className="
+                            h-80
+                            rounded-3xl
+                            border border-slate-100
+                            bg-white
+                            shadow-sm
+                            animate-pulse
+                        "
+                    />
+
+                    <div
+                        className="
+                            h-80
+                            rounded-3xl
+                            border border-slate-100
+                            bg-white
+                            shadow-sm
+                            animate-pulse
+                        "
+                    />
+                </section>
             </section>
         </main>
     );

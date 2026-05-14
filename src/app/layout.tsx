@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { QueryProvider } from "@/providers/query-provider";
 import { FocusSyncProvider } from "@/providers/focus-sync-provider";
 import "./globals.css";
-// import { Navbar } from "@/components/layout/Navbar";
+import { Navbar } from "@/components/layout/Navbar";
+import { Toaster } from "sonner";
 
 /* Carga fuentes de forma optimizada con next/font*/
 const geistSans = Geist({
@@ -44,6 +45,12 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
           </FocusSyncProvider>
         </QueryProvider>
+
+        <Toaster
+          position="top-right"
+          richColors
+          closeButton
+        />
       </body>
     </html>
   );
