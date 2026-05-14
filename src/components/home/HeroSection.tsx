@@ -7,13 +7,13 @@ import Image from "next/image";
 export function HeroSection() {
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Se utiliza next/image con priority para precargar la imagen de fondo, optimizar su formato y reducir drásticamente el LCP */}
       <Image
         src="/Header-image.jpg"
         alt="Fondo del portal médico"
         fill
         priority
-        quality={50}
+        fetchPriority="high"
+        quality={20}
         className="object-cover object-center -z-10"
         sizes="100vw"
       />
@@ -36,7 +36,7 @@ export function HeroSection() {
           </p>
 
           <div className="flex gap-4">
-            <Link href="/login" prefetch={true}>
+            <Link href="/login" prefetch={false}>
               <Button>Acceder al portal</Button>
             </Link>
 
