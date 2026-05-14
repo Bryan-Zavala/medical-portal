@@ -5,7 +5,7 @@ import { Button } from "@/components/atoms/Button";
 
 export function Header() {
   return (
-    <header className="fixed left-0 top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-white/30">
+    <header className="fixed left-0 top-0 z-50 w-full bg-white/95 border-b border-white/30">
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="text-xl font-bold text-sky-700 mt-1">
           <Image 
@@ -22,10 +22,10 @@ export function Header() {
           <Link href="/#about">Quiénes somos</Link>
           <Link href="/#services">Qué hacemos</Link>
           <Link href="/#articles">Artículos</Link>
-          <Link href="/appointments">Citas</Link>
+          <Link href="/appointments" prefetch={false}>Citas</Link>
         </nav>
 
-        <Link href="/login">
+        <Link href="/login" prefetch={false}>
           <Button>Acceder</Button>
         </Link>
       </Container>
