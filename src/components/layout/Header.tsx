@@ -14,7 +14,8 @@ export function Header() {
             width={150} 
             height={50} 
             priority
-            style={{ width: "150px", height: "auto" }}
+            unoptimized
+            className="w-37.5 h-12.5 object-contain"
           />
         </Link>
 
