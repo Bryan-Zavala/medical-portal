@@ -9,6 +9,7 @@ import type { User } from "../../types/user.types";
 import { DoctorMetricsGrid } from "./DoctorMetricsGrid";
 import { DoctorAppointments } from "./DoctorAppointments";
 import { DoctorPatientsRecords } from "./DoctorPatientsRecords";
+import { GranularErrorBoundary } from "@/components/atoms/GranularErrorBoundary";
 import { ProfileEditModal } from "./ProfileEditModal";
 
 import { Button } from "@/components/atoms/Button";
@@ -36,6 +37,15 @@ export function DoctorDashboard({ user }: DoctorDashboardProps) {
           </Button>
         </div>
 
+        <GranularErrorBoundary>
+          <DoctorMetricsGrid user={user} />
+        </GranularErrorBoundary>
+        <GranularErrorBoundary>
+          <DoctorAppointments user={user} />
+        </GranularErrorBoundary>
+        <GranularErrorBoundary>
+          <DoctorPatientsRecords user={user} />
+        </GranularErrorBoundary>
         <DoctorMetricsGrid user={user} />
         <DoctorAppointments user={user} />
         <DoctorPatientsRecords user={user} />
