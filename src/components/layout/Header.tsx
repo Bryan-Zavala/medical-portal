@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
 
@@ -7,7 +8,13 @@ export function Header() {
     <header className="fixed left-0 top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-white/30">
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="text-xl font-bold text-sky-700 mt-1">
-          <img src="/logo-remove.png" width={150} alt="" />
+          <Image 
+            src="/logo-remove.png" 
+            alt="Logo del Portal Médico" 
+            width={150} 
+            height={50} 
+            priority 
+          />
         </Link>
 
         <nav className="hidden gap-6 text-sm font-medium md:flex">
