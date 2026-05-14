@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Container } from "@/components/atoms/Container";
 import { Button } from "@/components/atoms/Button";
+import logoImg from "@/assets/logo-remove.webp";
 
 export function Header() {
   return (
@@ -9,8 +10,9 @@ export function Header() {
       <Container className="flex h-16 items-center justify-between">
         <Link href="/" className="text-xl font-bold text-sky-700 mt-1">
           <Image
-            src="/logo-remove.webp"
+            src={logoImg}
             alt="Logo del Portal Médico"
+            priority
             width={200}
             height={200}
             sizes="(min-width: 768px) 160px, 120px"

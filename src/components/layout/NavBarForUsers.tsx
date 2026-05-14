@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/atoms/Container";
 import { ButtonCloseSession } from "../atoms/ButtonCloseSession";
 import Image from "next/image";
+import logoImg from "@/assets/logo-remove.webp";
 
 export function NavBarForUsers() {
   return (
@@ -9,7 +10,7 @@ export function NavBarForUsers() {
       <Container className="flex justify-between h-16 items-center">
         <Link href="/" className="text-xl font-bold text-sky-700 mt-1">
           <Image
-            src="/logo-remove.webp"
+            src={logoImg}
             width={150}
             height={150}
             alt="logonavbar"
@@ -17,14 +18,18 @@ export function NavBarForUsers() {
         </Link>
 
         <nav className="flex gap-6 text-sm font-medium md:flex">
-          <Link href={"/"} className="flex items-center left-6 top-6 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
-              <Image
+          <Link href={"/"} prefetch={false} className="flex items-center left-6 top-6 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">
+              {/* <Image
                 src="/arrow.png"
                 alt=""
                 width={20}
                 height={20}
                 className="mr-5 hidden md:block"
-              />
+              /> */}
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 mr-3 hidden md:block">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              </svg>
               Volver al inicio
           </Link>
 
