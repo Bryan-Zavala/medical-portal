@@ -13,6 +13,7 @@ export function HeroSection() {
         alt="Fondo del portal médico"
         fill
         priority
+        quality={50}
         className="object-cover object-center -z-10"
         sizes="100vw"
       />
