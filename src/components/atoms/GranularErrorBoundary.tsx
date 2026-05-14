@@ -5,9 +5,9 @@ import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { ZodError } from "zod";
 
-// 1. ATOMIC DESIGN: Fallback aislado. Evita que un error local (ej. una gráfica pesada) rompa todo el dashboard médico.
+// 1. Evita que un error local rompa todo el dashboard médico.
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
-  // ZOD EVERYWHERE: Intercepta errores de validación si la API envía datos que rompen el esquema.
+  // ZOD  Intercepta errores de validación si la API envía datos que rompen el esquema.
   const isZodError = error instanceof ZodError;
   const safeError = error as { message?: string; status?: number };
   // SEGURIDAD (RBAC): Detecta errores 403 para proteger y ocultar datos a usuarios sin privilegios médicos.
