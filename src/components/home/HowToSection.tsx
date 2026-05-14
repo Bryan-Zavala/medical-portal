@@ -28,6 +28,7 @@ export function HowToSection() {
             width="100%"
             controls
             preload="none"
+            poster="/Header-image_1.webp"
             className="rounded-2xl shadow-xl"
             aria-label="Video tutorial para solicitar citas"
           >
