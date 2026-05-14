@@ -20,13 +20,15 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <Suspense fallback={<StreamingMetricsSkeleton />}>
-        <StreamingMetricsSection />
-      </Suspense>
-      <AboutSection />
-      <ServicesSection />
-      <ArticlesSection />
-      <Footer></Footer>
+      <div className="[content-visibility:auto] [contain-intrinsic-size:1px_4000px]">
+        <Suspense fallback={<StreamingMetricsSkeleton />}>
+          <StreamingMetricsSection />
+        </Suspense>
+        <AboutSection />
+        <ServicesSection />
+        <ArticlesSection />
+        <Footer></Footer>
+      </div>
 
       {/* <main className="min-h-screen py-10">
         <Container className="space-y-8">
