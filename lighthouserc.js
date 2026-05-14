@@ -8,7 +8,7 @@ module.exports = {
     },
     assert: {
       assertions: {
-        //  Asegurar 95+ en todas las métricas
+        //  95+ en todas las métricas
         'categories:performance': ['error', { minScore: 0.95 }],
         'categories:accessibility': ['error', { minScore: 0.95 }],
         'categories:best-practices': ['error', { minScore: 0.95 }],
