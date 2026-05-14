@@ -58,7 +58,6 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
       items: mockSpecialties,
       filter: specialtyFilter,
       delay: 350,
-      cacheNamespace: "patient-specialty-search",
     });
 
   const availableDoctors = useMemo(
@@ -171,6 +170,7 @@ export function CreateAppointmentForm({ user }: CreateAppointmentFormProps) {
         <div className="mt-5 grid gap-3">
           <div className="relative">
             <input
+              role="combobox"
               type="search"
               value={specialtyQuery}
               onFocus={() => {
