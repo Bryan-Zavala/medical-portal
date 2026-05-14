@@ -13,7 +13,8 @@ export function Header() {
             alt="Logo del Portal Médico" 
             width={150} 
             height={50} 
-            priority 
+            priority
+            style={{ width: "150px", height: "auto" }}
           />
         </Link>
 
